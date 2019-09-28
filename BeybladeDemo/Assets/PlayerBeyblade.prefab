@@ -448,9 +448,9 @@ MonoBehaviour:
   m_maxStamina: 100
   m_defenseMultiplier: 2
   m_attackMultiplier: 2
-  m_ceventDamageThreshold: 100
-  m_ceventVelocityThreshold: 100
-  m_bounceDisableTime: 1
+  m_ceventDamageThreshold: 5
+  m_ceventVelocityThreshold: 40
+  m_bounceDisableTime: 0.5
 --- !u!114 &114385550051508616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -510,7 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyName: Jump
-  dashMultiplier: 2.5
+  dashMultiplier: 1.25
   dashTime: 1
 --- !u!114 &114819263550980338
 MonoBehaviour:

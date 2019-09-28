@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4a3b2583adc4553aeb2659306b8722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxTilt: 20
+  m_maxTilt: 50
   m_smooth: 5
   center: {fileID: 4116802979450680}
   up: up
@@ -429,7 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c6d32bfde89400dab56d598d87891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxSpeed: 5
+  m_maxSpeed: 30
   m_smooth: 5
   up: up
   down: down
@@ -446,10 +446,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5453bdac94d43c6b15df4d7e3d195a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementScripts:
+  - {fileID: 114126185105681510}
+  - {fileID: 114081282468220522}
   m_gameSystem: {fileID: 0}
   m_maxStamina: 100
   m_defenseMultiplier: 2
   m_attackMultiplier: 2
+  m_ceventDamageThreshold: 5
+  m_ceventVelocityThreshold: 40
+  m_bounceDisableTime: 0.5
 --- !u!114 &114381842347723584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -491,6 +497,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4a91574ecbe424793709a4dba69b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  up: up
+  down: down
+  left: left
+  right: right
 --- !u!114 &114811068897134056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -502,8 +512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67803ab18b982a740a2cbf35ee81ac37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementScripts:
-  - {fileID: 0}
   keyName: Jump
   dashMultiplier: 2.5
   dashTime: 1
