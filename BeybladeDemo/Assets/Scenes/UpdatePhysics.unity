@@ -1043,12 +1043,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1193652968}
-  - component: {fileID: 1193652970}
   - component: {fileID: 1193652971}
   - component: {fileID: 1193652972}
   - component: {fileID: 1193652973}
   - component: {fileID: 1193652969}
-  - component: {fileID: 1193652974}
+  - component: {fileID: 1193652970}
   m_Layer: 0
   m_Name: beyblade3
   m_TagString: Untagged
@@ -1079,11 +1078,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1193652967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1495a9241c7c172408e7ae8fcf5022a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 03c6d32bfde89400dab56d598d87891c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
-  groundNormal: {x: 0, y: 1, z: 0}
+  m_maxSpeed: 30
+  m_smooth: 5
 --- !u!114 &1193652970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,11 +1091,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1193652967}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03c6d32bfde89400dab56d598d87891c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1495a9241c7c172408e7ae8fcf5022a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxSpeed: 30
-  m_smooth: 5
+  isGrounded: 0
+  groundNormal: {x: 0, y: 1, z: 0}
 --- !u!54 &1193652971
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1137,22 +1136,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1193652974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1193652967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67803ab18b982a740a2cbf35ee81ac37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementScripts:
-  - {fileID: 1193652970}
-  keyName: Jump
-  dashMultiplier: 2.5
-  dashTime: 1
 --- !u!1 &1403873580
 GameObject:
   m_ObjectHideFlags: 0

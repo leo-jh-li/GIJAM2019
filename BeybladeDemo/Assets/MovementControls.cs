@@ -40,6 +40,7 @@ public class MovementControls : MonoBehaviour {
             rb.velocity,
             Vector3.ProjectOnPlane(vel, ground.groundNormal),
             Time.deltaTime * m_smooth);
+            yield return null;
         }
     }
 }
