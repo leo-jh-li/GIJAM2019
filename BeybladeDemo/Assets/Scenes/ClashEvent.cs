@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ClashEvent : MonoBehaviour {
 	//Players
-	public ClashEventModule m_attacker;
-	public ClashEventModule m_defender;
+	ClashEventModule m_attacker;
+	ClashEventModule m_defender;
 
 	//Attacker Target [L, R, U, D]
 	List<Vector3> m_attackTargets;
@@ -26,6 +26,13 @@ public class ClashEvent : MonoBehaviour {
 		m_attackTargets.Add(m_defender.transform.position + Quaternion.Euler(0, -90, 0) * collisionDir/2);
 		m_attackTargets.Add(m_defender.transform.position + collisionDir/2);
 		m_attackTargets.Add(m_defender.transform.position - Quaternion.Euler(0, -90, 0) * collisionDir/2);
+
+		//Enable ClashEventModule
+		m_attacker.enabled = true;
+		m_defender.enabled = true;
+
+		//Start the Coroutine
+		StartCoroutine(Turn());
 	}
 	
 	// Update is called once per frame
@@ -34,10 +41,10 @@ public class ClashEvent : MonoBehaviour {
 	}
 
 	IEnumerator Turn() {
-		int attackerCommand = m_attacker.GetCommand();
-		int defenderCommand = m_defender.GetCommand();
-
-
-		yield return new WaitForSeconds(1f);
+		while(true) {
+			int attackerCommand = m_attacker.GetCommand();
+			int defenderCommand = m_defender.GetCommand();
+			yield return new WaitForSeconds(1f);	
+		}
 	}
 }
