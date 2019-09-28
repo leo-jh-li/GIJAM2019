@@ -29,7 +29,6 @@ public class BeyCollisionEffects : MonoBehaviour {
 	void OnCollisionEnter(Collision other) {
 		float impactForce = Vector3.Magnitude(other.relativeVelocity);
 		if (other.gameObject.tag == collisionTag && impactForce >= impactThresh) {
-			Debug.Log("Hello");
 			bottomSparksOneShot.Play();
 		}
 	}
