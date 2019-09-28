@@ -17,7 +17,6 @@ public class BeyCollisionEffects : MonoBehaviour {
 	}
 
 	void Update() {
-		Debug.Log(Vector3.Distance(lastPos, transform.position));
 		if (Vector3.Distance(lastPos, transform.position) >= movementThresh) {
 			bottomSparksLoop.Play();
 		} else {
