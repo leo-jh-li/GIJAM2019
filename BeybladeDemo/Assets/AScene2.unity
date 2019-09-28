@@ -2237,8 +2237,11 @@ MonoBehaviour:
   impactThresh: 1
   bottomSparksOneShot: {fileID: 1191897203}
   bottomSparksLoop: {fileID: 1635887403}
+  groundCheck: {fileID: 1193652974}
+  trailRenderer: {fileID: 1454489853}
   collisionTag: Ground
   movementThresh: 1
+  maxTrailHeight: 0.01
 --- !u!1 &1304913066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,6 +2442,11 @@ Transform:
 --- !u!4 &1454489852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 98d8be0910272a141baab2d3d25fc06b,
+    type: 2}
+  m_PrefabInternal: {fileID: 534705842}
+--- !u!96 &1454489853 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 9600000, guid: 98d8be0910272a141baab2d3d25fc06b,
     type: 2}
   m_PrefabInternal: {fileID: 534705842}
 --- !u!1 &1565842706 stripped

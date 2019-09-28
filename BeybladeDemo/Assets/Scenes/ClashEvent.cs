@@ -94,7 +94,6 @@ public class ClashEvent : MonoBehaviour
 		} else if (relativeDirection == Vector3.back) {
 			duration *= 0.5f;
 		}
-		Debug.Log(duration);
         LTDescr tween = LeanTween.move(m_attacker.gameObject, list.ToArray(), duration);
 		//tween.setEaseInCubic();
         tween.setOnComplete(() =>
