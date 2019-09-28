@@ -75,6 +75,8 @@ public class ClashEvent : MonoBehaviour
         List<Vector3> list = new List<Vector3>();
         list.Add(m_attacker.transform.position);
 
+
+        Vector3 diff = end - m_attacker.transform.position;
         this.getRelativeDirection(list, relativeDirection, end);
 
         list.Add(end);
@@ -89,7 +91,10 @@ public class ClashEvent : MonoBehaviour
 		tween.setEaseInCubic();
         tween.setOnComplete(() =>
         {
-            list.Reverse();
+            if (relativeDirection != Vector3.forward) {
+                list.Reverse();
+            }
+
             Vector3 relDir = Vector3.zero;
 
             if (relativeDirection == Vector3.up)
@@ -102,7 +107,10 @@ public class ClashEvent : MonoBehaviour
             }
             else if (relativeDirection == Vector3.forward)
             {
-                relDir = new Vector3(0, -180, 0);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    list[i] = list[i] + diff;
+                }
             }
             if (relativeDirection != Vector3.zero)
             {
