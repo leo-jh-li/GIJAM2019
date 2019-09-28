@@ -8,36 +8,27 @@ public class MovementControls : MonoBehaviour {
 	public float m_smooth = 5f;
 
 	private Rigidbody rb;
+    GroundCheck ground;
 
 	// Use this for initialization
 	void Start () {
 		rb = GetComponentInChildren<Rigidbody>();
+        ground = GetComponentInChildren<GroundCheck>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float x_velocity = 0;
-		float z_velocity = 0;
+        Vector3 vel = new Vector3((Input.GetKey("d")? 1:0) - (Input.GetKey("a")? 1:0),
+            0,
+            (Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0)).normalized * m_maxSpeed;
 
+        vel = Vector3.ProjectOnPlane(vel, ground.groundNormal);
+        //print(vel.ToString());
 		// Work on Forward / Backwards Tilt
-		if(Input.GetKey("w")) {
-			z_velocity = m_maxSpeed;
-		}
-		else if(Input.GetKey("s")) {
-			z_velocity = -1 * m_maxSpeed;
-		}
-
-		// Work on Left / Right Tilt
-		if(Input.GetKey("a")) {
-			x_velocity = -1 * m_maxSpeed;
-		}
-		else if(Input.GetKey("d")) {
-			x_velocity = m_maxSpeed;
-		}
 
 		rb.velocity = Vector3.Slerp(
 			rb.velocity,
-			new Vector3(x_velocity, rb.velocity.y, z_velocity),
+			vel,
 			Time.deltaTime * m_smooth);
 
 		//print(rb.velocity);
