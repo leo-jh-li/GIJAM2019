@@ -28,7 +28,6 @@ public class PlayerCam : MonoBehaviour {
 	[SerializeField] private Transform m_clashRotationRef;			// Reference to transform used for setting m_clashRotation
 	[SerializeField] private float m_clashExtraHeight;				// Extra height added during clash to give more view behind players
 
-
 	private void Start() {
 		m_freePos = transform.position;
 		m_freeRotation = transform.rotation;

@@ -13,10 +13,19 @@ public class CamerasManager : MonoBehaviour {
 	[SerializeField] private Vector4 m_fullCamRect;
 	[SerializeField] private float m_transitionSpeed;
 
+	[Header("Particles")]
+	[SerializeField] private ParticleSystem m_leftSideSparks;
+	private GameObject m_leftSideParticles;
+	[SerializeField] private ParticleSystem m_rightSideSparks;
+	private GameObject m_rightSideParticles;
+
+
 	private void Start () {
 		// Set split screen
 		m_leftCam.rect = new Rect(m_leftDefaultRect.x, m_leftDefaultRect.y, m_leftDefaultRect.z, m_leftDefaultRect.w);
 		m_rightCam.rect = new Rect(m_rightDefaultRect.x, m_rightDefaultRect.y, m_rightDefaultRect.z, m_rightDefaultRect.w);
+		m_leftSideParticles = m_leftSideSparks.transform.parent.gameObject;
+		m_rightSideParticles = m_rightSideSparks.transform.parent.gameObject;
 	}
 
 	public IEnumerator ResetToSplitScreen() {
@@ -34,9 +43,11 @@ public class CamerasManager : MonoBehaviour {
 	public IEnumerator FocusLeftCam() {
 		float timeElapsed = 0;
 		StartCoroutine(m_leftPlayerCam.TransitionToClash(m_rightPlayerCam.followTarget));
+		m_rightSideSparks.Play();
 		while (m_leftCam.rect.width < m_fullCamRect.z) {
 			m_leftCam.rect = new Rect(m_leftDefaultRect.x, m_leftDefaultRect.y, Mathf.Lerp(m_leftCam.rect.width, m_fullCamRect.z, timeElapsed * m_transitionSpeed), m_leftDefaultRect.w);
 			m_rightCam.rect = new Rect(Mathf.Lerp(m_rightCam.rect.x, 1, timeElapsed * m_transitionSpeed), m_rightDefaultRect.y, Mathf.Lerp(m_rightCam.rect.width, 0, timeElapsed * m_transitionSpeed), m_rightDefaultRect.w);
+			// m_rightSideParticles.position = new ;
 			timeElapsed += Time.fixedDeltaTime;
 			yield return new WaitForEndOfFrame();
 		}
