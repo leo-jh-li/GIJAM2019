@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class NormalShield : MonoBehaviour {
 
-    public float defenseMultiplier = 1f;
     public string assignedKey = "Fire3";
     public float maxShieldTime = 2f;
     public float shieldInitSize = 5f;
     public float shieldMinSize = 3f;
-    public float baseDefense = 1f;
-    public float highDefense = 4f;
-    public float overshieldPenalty = 0.3f;
+    public float baseDefense = 2f;
+    public float highDefense = 6f;
+    public float overshieldPenalty = 1f;
     public float overshieldPenaltyTime = 3f;
+	
+    public float defenseMultiplier = 2f;
 
     SphereCollider shield;
 	Beyblade b;
@@ -27,6 +28,8 @@ public class NormalShield : MonoBehaviour {
         shieldRadiusDelta = (shieldInitSize - shieldMinSize) / maxShieldTime;
         shield = GetComponent<SphereCollider>();
 		b = GetComponent<Beyblade>();
+		
+		b.m_defenseMultiplier = defenseMultiplier;
         shield.radius = shieldInitSize;
 	}
 	
@@ -39,13 +42,13 @@ public class NormalShield : MonoBehaviour {
 				if (!shield.enabled){
 					b.DisablePlayerInfluence();
 				    shield.enabled = true;
+					b.m_defenseMultiplier = highDefense;
 				}
                 shieldTimer -= Time.deltaTime;
                 shield.radius -= shieldRadiusDelta * Time.deltaTime;
-                defenseMultiplier = highDefense;
                 if (shieldTimer <= 0)
                 {
-                    defenseMultiplier = overshieldPenalty;
+                    b.m_defenseMultiplier = overshieldPenalty;
 					shield.enabled = false;
                     StartCoroutine("BreakShield");
                 }
@@ -55,6 +58,7 @@ public class NormalShield : MonoBehaviour {
 				if (shield.enabled){
 					b.EnablePlayerInfluence();
 					shield.enabled = false;
+					b.m_defenseMultiplier = baseDefense;
 				}
                 if (shieldTimer < maxShieldTime)
                     shieldTimer += Mathf.Min(Time.deltaTime, maxShieldTime - shieldTimer);
@@ -62,7 +66,7 @@ public class NormalShield : MonoBehaviour {
                 {
                     shield.radius += Mathf.Min(shieldRadiusDelta * Time.deltaTime, shieldInitSize - shield.radius);
                 }
-                defenseMultiplier = baseDefense;
+                
             }
         }
 		
@@ -74,5 +78,6 @@ public class NormalShield : MonoBehaviour {
         yield return new WaitForSeconds(overshieldPenaltyTime);
         ready = true;
 		b.EnablePlayerInfluence();
+		b.m_defenseMultiplier = baseDefense;
     }
 }

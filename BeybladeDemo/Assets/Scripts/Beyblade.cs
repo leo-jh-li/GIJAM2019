@@ -10,7 +10,6 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	// Based on Shielding [1, m_defenseMultiplier]
 	public float m_defenseMultiplier;
-	float m_currentDefenseMultiplier;
 
 	// Based on Velocity [0, m_attackMultiplier]
 	public float m_attackMultiplier;
@@ -59,7 +58,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	}
 
 	public float GetDefenseMultiplier() {
-		return m_currentDefenseMultiplier;
+		return m_defenseMultiplier;
 	}
 
 	public float GetAttackMultiplier() {
