@@ -158,7 +158,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cda9a36390d3a4c99c85668dca1b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_followTarget: {fileID: 0}
-  m_focusTarget: {fileID: 0}
+  m_cam: {fileID: 4004511976053032}
+  camMode: 0
+  followTarget: {fileID: 0}
+  m_freeFocusTarget: {fileID: 0}
   m_moveSpeed: 3
   m_turnSpeed: 2
+  m_transitionMoveSpeed: 0.5
+  m_transitionFreezeTime: 0.75
+  m_transitionTime: 3
+  m_freePos: {x: 0, y: 10, z: -18}
+  m_freeEulers: {x: 25, y: 0, z: 0}
+  m_clashPos: {x: 0, y: 50, z: 0}
+  m_clashEulers: {x: 90, y: 0, z: 0}
