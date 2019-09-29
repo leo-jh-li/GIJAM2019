@@ -182,7 +182,6 @@ public class ClashEvent : MonoBehaviour
             Debug.Log("Did not hit shield");
             IncrementCombo();
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
-            this.GetComponent<GameUITextMaker>().createText(m_defender.transform.position, m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);
             this.tweenEnemyKnockback(relativeDirection, dir, cross);
         });
