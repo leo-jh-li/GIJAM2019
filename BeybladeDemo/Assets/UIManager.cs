@@ -21,6 +21,10 @@ public class UIManager : MonoBehaviour {
 		clashEvent.setComboCallback(UpdateComboText);
 	}
 
+	void Start() {
+		comboCanvas.alpha = 0;
+	}
+
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.N)) {
 			// for testing only

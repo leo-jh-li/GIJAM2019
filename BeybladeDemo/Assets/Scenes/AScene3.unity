@@ -2798,6 +2798,36 @@ Prefab:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 225444070888476892, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
+        type: 2}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224549366453598024, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 201.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 224549366453598024, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 309.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 224549366453598024, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 91.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114622502823318864, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 114622502823318864, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
+        type: 2}
+      propertyPath: m_FontData.m_Alignment
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcba7e2f553e60c4cbed97fb170f5ad3, type: 2}
   m_IsPrefabAsset: 0
@@ -5262,6 +5292,7 @@ GameObject:
   - component: {fileID: 1929277907}
   - component: {fileID: 1929277906}
   - component: {fileID: 1929277908}
+  - component: {fileID: 1929277909}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -5316,6 +5347,20 @@ MonoBehaviour:
   m_gameMode: 0
   m_cevent: {fileID: 1929277906}
   m_delayTransition: 1
+--- !u!114 &1929277909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1929277905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10907e1af3ad8e44789a77ebf0eb1c70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageTextPrefab: {fileID: 1026655178580266, guid: 585979317d929454581429c462ee9f05,
+    type: 2}
+  testTransform: {fileID: 414590362}
 --- !u!1001 &1993493615
 Prefab:
   m_ObjectHideFlags: 0

@@ -23,7 +23,6 @@ public class ClashEvent : MonoBehaviour
     public float topDownOffset = 10f;
     private System.Action<int> comboCallback;
 
-    public GameObject damageTextPrefab;
 
     public int GetMaxCombo() {
         return maxCombo;
@@ -92,6 +91,9 @@ public class ClashEvent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Hello");
+
+
         if (!isAttacking)
         {
             Vector3 dir = (m_defender.transform.position - m_attacker.transform.position).normalized;
@@ -115,6 +117,8 @@ public class ClashEvent : MonoBehaviour
                 this.triggerAnimation(m_defender.transform.position - dir * 5f, Vector3.back, dir, cross);
             }
         }
+
+
 
         if(current_combo >= maxCombo) {
             m_gameSystem.Initiate3D(
@@ -176,14 +180,10 @@ public class ClashEvent : MonoBehaviour
             Debug.Log("Did not hit shield");
             IncrementCombo();
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
+            this.GetComponent<GameUITextMaker>().createText(m_defender.transform.position, m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);
             this.tweenEnemyKnockback(relativeDirection, dir, cross);
         });
-    }
-
-    private void createText(bool isAttacker) {
-
-        // Instantiate the text.
     }
 
     LTDescr nextTween(Vector3 end, Vector3 relativeDirection, List<Vector3> list, Vector3 dir, float duration) {

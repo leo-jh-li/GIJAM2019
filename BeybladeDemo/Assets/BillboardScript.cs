@@ -5,6 +5,7 @@ using UnityEngine;
 public class BillboardScript : MonoBehaviour {
 	public Camera followCam;
      void Update() {
-         transform.rotation = followCam.transform.rotation;
+         if (followCam != null)
+            transform.rotation = followCam.transform.rotation;
      }
 }

@@ -86,8 +86,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texMesh: {fileID: 114932923342409360}
-  textFadeSpeed: 1
-  textDisplayTime: 1
+  textFadeSpeed: 1.5
+  textDisplayTime: 0
+  textMoveUpSpeed: 14
 --- !u!114 &114932923342409360
 MonoBehaviour:
   m_ObjectHideFlags: 1
