@@ -5,7 +5,6 @@ using UnityEngine;
 public class Beyblade : MonoBehaviour, PlayerControls {
 	public MonoBehaviour[] movementScripts;
 	public GameSystem m_gameSystem;
-
 	public float m_maxStamina;
 	float m_stamina;
 
