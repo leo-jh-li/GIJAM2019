@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Beyblade : MonoBehaviour, PlayerControls {
 	public MonoBehaviour[] movementScripts;
+	public GameObject[] m_beybladePieces;
 	public GameSystem m_gameSystem;
 	public float m_maxStamina;
-	float m_stamina;
+	[SerializeField]float m_stamina;
 
 	// Based on Shielding [1, m_defenseMultiplier]
 	public float m_defenseMultiplier;
@@ -35,15 +36,39 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	bool ClashEventDecision(Beyblade other, float collisionResult) {
 		return (collisionResult >= m_ceventDamageThreshold || 
 			GetComponent<Rigidbody>().velocity.magnitude >= m_ceventVelocityThreshold ||
-			other.GetComponent<Rigidbody>().velocity.magnitude >= m_ceventVelocityThreshold);
+			other.GetComponent<Rigidbody>().velocity.magnitude >= m_ceventVelocityThreshold) && collisionResult > 0f;
 	}
 
 	void BounceBack(Beyblade other, float collisionResult) {
 		Vector3 collisionDir = GetComponent<Rigidbody>().velocity - other.GetComponent<Rigidbody>().velocity.normalized;
-		DisablePlayerInfluence();
-		Invoke("EnablePlayerInfluence", m_bounceDisableTime);
-		GetComponent<Rigidbody>().velocity = -1 * m_mc.m_maxSpeed * Utilities.sigmoid(collisionResult, 4) * collisionDir / 3;
-		other.GetComponent<Rigidbody>().velocity = m_mc.m_maxSpeed * Utilities.sigmoid(collisionResult, 4) * collisionDir / 3;
+
+		//TODO: FIX HARDCODED MINIMUM
+		Vector3 bounceBack = m_mc.m_maxSpeed * Utilities.sigmoid(collisionResult, 4) * collisionDir / 3;
+		if (bounceBack.magnitude < 10) {
+			bounceBack = 10 * collisionDir;
+		}
+		GetComponent<Rigidbody>().velocity = -1 * bounceBack;
+		other.GetComponent<Rigidbody>().velocity = bounceBack;
+	}
+
+	public void BounceBack(Beyblade other, Vector3 dir, float magnitude = 10) {
+		dir = dir.normalized * magnitude;
+		print(dir);
+		GetComponent<Rigidbody>().velocity = -1 * dir;
+		other.GetComponent<Rigidbody>().velocity = dir;
+	}
+
+	//Disable/Enable Beyblade Part Colliders
+	public void DisableBeybladePieces() {
+		foreach (GameObject bp in m_beybladePieces) {
+			bp.SetActive(false);
+		}
+	}
+
+	public void EnableBeybladePieces() {
+		foreach (GameObject bp in m_beybladePieces) {
+			bp.SetActive(true);
+		}
 	}
 
 	//Disable/Enable Player Controls without disabling physics
@@ -68,22 +93,22 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	}
 
 	public void TakeDamage(float dmg) {
-		m_stamina = (m_stamina - dmg < 0) ? 0 : m_stamina;
+		m_stamina = (m_stamina - dmg < 0) ? 0 : m_stamina - dmg;
 	}
 
 	public void BeybladeCollision(BeybladePiece thisPiece, BeybladePiece otherPiece) {
 		float result = ComputeCollisionResult(thisPiece, otherPiece);
 		if(ClashEventDecision(otherPiece.m_parent, result) && !m_collision) {
-			m_gameSystem.Initiate2D(this, otherPiece.m_parent);
+			otherPiece.m_parent.TakeDamage(result);
+			//TODO: Determine combo count
+			m_gameSystem.Initiate2D(this, otherPiece.m_parent, 10);
 		}
 		else if(!m_collision && result > 0f) {
+			DisablePlayerInfluence();
+			Invoke("EnablePlayerInfluence", m_bounceDisableTime);
 			BounceBack(otherPiece.m_parent, result);
-		}	
-		if(result < 0f) {
-			print("Ouch! Took - " + result);
-			TakeDamage(-1 * result);
+			otherPiece.m_parent.TakeDamage(result);
 		}
-
 		m_collision = true;
 	}
 

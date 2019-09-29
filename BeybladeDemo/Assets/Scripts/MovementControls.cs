@@ -35,10 +35,10 @@ public class MovementControls : MonoBehaviour, PlayerControls {
 	
 	// Update is called once per frame
 	void Update () {
-        vel = new Vector3((Input.GetKey(right) && playerInfluence ? 1:0) - (Input.GetKey(left) && playerInfluence ? 1:0),
-            0,
-            (Input.GetKey(up) && playerInfluence ? 1 : 0) - (Input.GetKey(down) && playerInfluence ? 1 : 0)).normalized * m_maxSpeed;
-
+		if (playerInfluence && ground.isGrounded)
+			vel = new Vector3((Input.GetKey(right)? 1:0) - (Input.GetKey(left)? 1:0),
+				0,
+				(Input.GetKey(up)? 1 : 0) - (Input.GetKey(down)? 1 : 0)).normalized * m_maxSpeed;
         
         //print(vel.ToString());
 		// Work on Forward / Backwards Tilt

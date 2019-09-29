@@ -957,16 +957,6 @@ Prefab:
       propertyPath: m_gameSystem
       value: 
       objectReference: {fileID: 692894321}
-    - target: {fileID: 114326626173356828, guid: 120530589d2334e78ba4019c5cc3a069,
-        type: 2}
-      propertyPath: dashMultiplier
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114326626173356828, guid: 120530589d2334e78ba4019c5cc3a069,
-        type: 2}
-      propertyPath: dashTime
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
   m_IsPrefabAsset: 0
@@ -1299,8 +1289,13 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4141939352172260, guid: b1a07a55618b74a4a9599b722fa3c729, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 114227629728281096, guid: b1a07a55618b74a4a9599b722fa3c729,
+        type: 2}
+      propertyPath: m_gameSystem
+      value: 
+      objectReference: {fileID: 692894321}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1a07a55618b74a4a9599b722fa3c729, type: 2}
   m_IsPrefabAsset: 0

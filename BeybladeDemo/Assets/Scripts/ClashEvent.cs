@@ -4,48 +4,78 @@ using UnityEngine;
 
 public class ClashEvent : MonoBehaviour
 {
+    public GameSystem m_gameSystem;
+
     //Players
     public ClashEventModule m_attacker;
     public ClashEventModule m_defender;
-
-    //Attacker Target [L, R, U, D]
-    List<Vector3> m_attackTargets;
 
     public float attackDuration = 1f;
     public float attackAmplitude = 10f;
     bool isAttacking = false;
     int groundLayer;
+    int maxCombo;
+    int current_combo;
+    Vector3 lastKnownDir;
     
     public float maxDistanceThresh = 70;
     public float maxDistanceThreshOffset = 10f;
     public float topDownOffset = 10f;
 
+    public int GetMaxCombo() {
+        return maxCombo;
+    }
+
+    public void SetMaxCombo(int count) {
+        maxCombo = count;
+    }
+
+    public void IncrementCombo() {
+        current_combo++;
+    }
+
+    public int GetComboCount() {
+        return current_combo;
+    }
+
+    public void SetLastKnownDirection(Vector3 dir) {
+        lastKnownDir = dir;
+    }
+
+    public Vector3 GetLastKnownDirection() {
+        return lastKnownDir;
+    }
+
+    public float shieldCollisionSize = 4f;
+
     public void SetPlayers(ClashEventModule attacker, ClashEventModule defender)
     {
         m_attacker = attacker;
         m_defender = defender;
+        current_combo = 0;
     }
 
     // Use this for initialization
     void Start()
     {
         groundLayer = LayerMask.GetMask("floor");
+
         //Init
-        m_attackTargets = new List<Vector3>();
+        //m_attackTargets = new List<Vector3>();
 
         //Compute Target points
-        Vector3 collisionDir = m_defender.transform.position - m_attacker.transform.position;
-        m_attackTargets.Add(m_defender.transform.position - collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position + Quaternion.Euler(0, -90, 0) * collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position + collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position - Quaternion.Euler(0, -90, 0) * collisionDir / 2);
+        // Vector3 collisionDir = m_defender.transform.position - m_attacker.transform.position;
+        // m_attackTargets.Add(m_defender.transform.position - collisionDir / 2);
+        // m_attackTargets.Add(m_defender.transform.position + Quaternion.Euler(0, -90, 0) * collisionDir / 2);
+        // m_attackTargets.Add(m_defender.transform.position + collisionDir / 2);
+        // m_attackTargets.Add(m_defender.transform.position - Quaternion.Euler(0, -90, 0) * collisionDir / 2);
 
         //Enable ClashEventModule
         m_attacker.enabled = true;
         m_defender.enabled = true;
-
     }
 
+    // up -> LEFT, down -> RIGHT, forward -> UP, back -> DOWN
     // Update is called once per frame
     void Update()
     {
@@ -53,23 +83,32 @@ public class ClashEvent : MonoBehaviour
         {
             Vector3 dir = (m_defender.transform.position - m_attacker.transform.position).normalized;
             Vector3 cross = Vector3.Cross(dir, m_attacker.transform.TransformDirection(Vector3.up));
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                this.triggerAnimation(m_defender.transform.position, Vector3.up, dir, cross);
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                this.triggerAnimation(m_defender.transform.position, Vector3.down, dir, cross);
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                this.triggerAnimation(m_defender.transform.position, Vector3.back, dir, cross);
-            }
+            SetLastKnownDirection(dir);
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (m_attacker.GetCommand() == 0)
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.forward, dir, cross);
+                this.triggerAnimation(m_defender.transform.position + cross * 5f, Vector3.up, dir, cross);
             }
+            else if (m_attacker.GetCommand() == 1)
+            {
+                this.triggerAnimation(m_defender.transform.position + dir * 5f, Vector3.forward, dir, cross);
+            }
+            else if (m_attacker.GetCommand() == 2)
+            {
+                this.triggerAnimation(m_defender.transform.position - cross * 5f, Vector3.down, dir, cross);
+            }
+            else if (m_attacker.GetCommand() == 3)
+            {
+                this.triggerAnimation(m_defender.transform.position - dir * 5f, Vector3.back, dir, cross);
+            }
+        }
+
+        if(current_combo >= maxCombo) {
+            m_gameSystem.Initiate3D(
+                m_attacker.gameObject.GetComponent<Beyblade>(), 
+                m_defender.gameObject.GetComponent<Beyblade>(),
+                GetLastKnownDirection());
+            this.enabled = false;
         }
     }
 
@@ -84,9 +123,7 @@ public class ClashEvent : MonoBehaviour
     void triggerAnimation(Vector3 end, Vector3 relativeDirection, Vector3 dir, Vector3 cross)
     {
         isAttacking = true;
-        m_attacker.GetComponent<Rigidbody>().detectCollisions = false;
-        m_attacker.GetComponent<Rigidbody>().isKinematic = true;
-        m_attacker.GetComponent<Rigidbody>().useGravity = false;
+        m_attacker.GetComponent<Collider>().isTrigger = true;
         List<Vector3> list = new List<Vector3>();
         list.Add(m_attacker.transform.position);
 
@@ -101,60 +138,120 @@ public class ClashEvent : MonoBehaviour
 			duration *= 0.5f;
 		}
         LTDescr tween = LeanTween.move(m_attacker.gameObject, list.ToArray(), duration);
+        int id = tween.id;
 		//tween.setEaseInCubic();
-        tween.setOnComplete(() =>
-        {
-            if (relativeDirection != Vector3.forward) {
-                list.Reverse();
-            }
 
-            Vector3 relDir = Vector3.zero;
-
-            if (relativeDirection == Vector3.up)
-            {
-                relDir = new Vector3(0, 90, 0);
-            }
-            else if (relativeDirection == Vector3.down)
-            {
-                relDir = new Vector3(0, -90, 0);
-            }
-            else if (relativeDirection == Vector3.forward)
-            {
-                Vector3 diff =  (m_defender.transform.position - m_attacker.transform.position);
-                list = new List<Vector3>();
-                list.Add(getTopDownPos(end));
-                list.Add(getTopDownPos(end + dir * attackAmplitude * 0.5f));
-                list.Add(getTopDownPos(end + dir * attackAmplitude* 0.75f));
-                list.Add(getTopDownPos(end + dir * attackAmplitude* 1.0f));
-
-            }
-            if (relativeDirection != Vector3.zero)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    list[i] = getTopDownPos(RotatePointAroundPivot(list[i], m_defender.transform.position, relDir));
+        tween.setOnUpdate((float val) => {
+            Collider [] colliders = Physics.OverlapSphere(m_attacker.transform.position, shieldCollisionSize);
+            foreach (Collider col in colliders) {
+                if (col.tag == "Shield") {
+                    Debug.Log("Hit shield");
+                    //Increment Combo and lose a Max Combo
+                    IncrementCombo();
+                    SetMaxCombo(GetMaxCombo() - 1);
+                    m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage - m_defender.m_comboDefense);
+                    LeanTween.cancel(m_attacker.gameObject, tween.id);
+                    this.nextTween(end, relativeDirection, list, dir, duration);
+                    break;
                 }
             }
 
-            LTDescr tween2 = LeanTween.move(m_attacker.gameObject, list.ToArray(), duration);
-			//tween2.setEaseOutCubic();
-            tween2.setOnComplete(() =>
-            {
-                isAttacking = false;
-                m_attacker.GetComponent<Rigidbody>().detectCollisions = true;
-                m_attacker.GetComponent<Rigidbody>().isKinematic = false;
-                m_attacker.GetComponent<Rigidbody>().useGravity = true;
-            });
         });
+
+        tween.setOnComplete(() =>
+        {
+            Debug.Log("Did not hit shield");
+            IncrementCombo();
+            m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
+            this.nextTween(end, relativeDirection, list, dir, duration);
+            this.tweenEnemyKnockback(relativeDirection, dir, cross);
+        });
+    }
+
+    LTDescr nextTween(Vector3 end, Vector3 relativeDirection, List<Vector3> list, Vector3 dir, float duration) {
+        if (relativeDirection != Vector3.forward) {
+            list.Reverse();
+        }
+
+        Vector3 relDir = Vector3.zero;
+
+        if (relativeDirection == Vector3.up)
+        {
+            relDir = new Vector3(0, 90, 0);
+        }
+        else if (relativeDirection == Vector3.down)
+        {
+            relDir = new Vector3(0, -90, 0);
+        }
+        else if (relativeDirection == Vector3.forward)
+        {
+            Vector3 diff =  (m_defender.transform.position - m_attacker.transform.position);
+            list = new List<Vector3>();
+            list.Add(getTopDownPos(end));
+            list.Add(getTopDownPos(end + dir * attackAmplitude * 0.5f));
+            list.Add(getTopDownPos(end + dir * attackAmplitude* 0.75f));
+            list.Add(getTopDownPos(end + dir * attackAmplitude* 1.0f));
+
+        }
+        if (relativeDirection != Vector3.zero)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                list[i] = getTopDownPos(RotatePointAroundPivot(list[i], m_defender.transform.position, relDir));
+            }
+        }
+
+
+        LTDescr tween2 = LeanTween.move(m_attacker.gameObject, list.ToArray(), duration);
+		//tween2.setEaseOutCubic();
+        tween2.setOnComplete(() =>
+        {
+            isAttacking = false;
+            m_attacker.GetComponent<Collider>().isTrigger = false;
+       
+        });
+
+        return tween2;
+    }
+
+    LTDescr tweenEnemyKnockback(Vector3 relativeDirection, Vector3 dir, Vector3 cross) {
+        List<Vector3> list = new List<Vector3>();
+        Vector3 origPos = m_defender.transform.position;
+        list.Add(m_defender.transform.position);
+
+        if (relativeDirection == Vector3.up) {
+            list.Add(m_defender.transform.position + -cross * attackAmplitude);
+            list.Add(m_defender.transform.position + -cross * attackAmplitude);
+        } else if (relativeDirection == Vector3.down) {
+            list.Add(m_defender.transform.position + cross * attackAmplitude);
+            list.Add(m_defender.transform.position + cross * attackAmplitude);
+        } else if (relativeDirection == Vector3.forward) {
+            list.Add(m_defender.transform.position - dir * attackAmplitude);
+            list.Add(m_defender.transform.position - dir * attackAmplitude);
+        } else {
+            list.Add(m_defender.transform.position + dir * attackAmplitude);
+            list.Add(m_defender.transform.position + dir * attackAmplitude);
+        }
+
+        list.Add(origPos);
+        LTDescr tween2 = LeanTween.move(m_defender.gameObject, list.ToArray(), 0.25f);
+        tween2.setEaseOutQuad();
+
+        return tween2;
     }
 
     void getRelativeDirection(List<Vector3> list, Vector3 relativeDirection, Vector3 end, Vector3 dir, Vector3 cross)
     {
-        if (relativeDirection == Vector3.up || relativeDirection == Vector3.down)
+        if (relativeDirection == Vector3.up )
         {
             // left/right
             Vector3 v2 = m_attacker.transform.position + 0.33f * dir + cross * attackAmplitude;
             Vector3 v3 = m_attacker.transform.position + 0.66f * dir + cross * attackAmplitude;
+            list.Add(getTopDownPos(v2));
+            list.Add(getTopDownPos(v3));
+        } else if (relativeDirection == Vector3.down) {
+            Vector3 v2 = m_attacker.transform.position + 0.33f * dir + -cross * attackAmplitude;
+            Vector3 v3 = m_attacker.transform.position + 0.66f * dir + -cross * attackAmplitude;
             list.Add(getTopDownPos(v2));
             list.Add(getTopDownPos(v3));
         }
