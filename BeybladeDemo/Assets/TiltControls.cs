@@ -28,6 +28,7 @@ public class TiltControls : MonoBehaviour, PlayerControls {
 
 	// Use this for initialization
 	void Start () {
+		playerInfluence = true;
 		layerMask = LayerMask.GetMask("floor");
 	}
 
