@@ -6,6 +6,8 @@ public class ClashEventModule : MonoBehaviour, PlayerControls {
 	
 	//Input
 	public string up, down, left, right;
+	public float m_comboDamage;
+	public float m_comboDefense;
 
 	int command;
 	bool playerInfluence;

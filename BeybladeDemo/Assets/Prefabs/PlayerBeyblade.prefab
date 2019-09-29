@@ -228,7 +228,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1355358247712746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.61, z: 0}
+  m_LocalPosition: {x: 0, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4331939152022212}
@@ -485,6 +485,10 @@ MonoBehaviour:
   movementScripts:
   - {fileID: 114400943411158632}
   - {fileID: 114910544940668580}
+  m_beybladePieces:
+  - {fileID: 1651071123235740}
+  - {fileID: 1494163280079970}
+  - {fileID: 1127570728267852}
   m_gameSystem: {fileID: 0}
   m_maxStamina: 100
   m_defenseMultiplier: 2
