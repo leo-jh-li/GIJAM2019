@@ -8,7 +8,7 @@ public class ControllerMainMenuNav : MonoBehaviour {
 	void Update () {
 		// TODO: change buttons!
 		if (Input.GetKeyDown(KeyCode.A)) {
-			SceneManager.LoadScene("gameScene");
+			SceneManager.LoadScene("GameScene");
 		} else if (Input.GetKeyDown(KeyCode.S)) {
 			SceneManager.LoadScene("Instructions");
 		}

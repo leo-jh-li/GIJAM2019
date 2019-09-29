@@ -22,11 +22,16 @@ public class GameSystem : MonoBehaviour {
 	//Directional Light
 	public Light m_dirLight;
 
+	public Canvas player1Canvas;
+	public Canvas player2Canvas;
+
 	// Initiate 2D Mode
 	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount, float clashSpeed = 0f) {
 		if (!m_gameMode) {
 			StartCoroutine(FreezeFrame2D(attacker, defender, comboCount, clashSpeed));
 			m_gameMode = !m_gameMode;
+			player1Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
+			player2Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
 		}
 	}
 
@@ -35,13 +40,13 @@ public class GameSystem : MonoBehaviour {
 			//Enable Controls
 			StartCoroutine(FreezeFrame3D(p1, p2, bounceBack));
 			m_gameMode = !m_gameMode;
+
+			player1Canvas.worldCamera = m_cam.getMyCamera(p1.gameObject);
+			player2Canvas.worldCamera = m_cam.getMyCamera(p2.gameObject);
+			
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
