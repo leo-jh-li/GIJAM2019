@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Dashing : MonoBehaviour, PlayerControls {
     public string keyName = "Jump";
+    public string controllerName;
     public float dashMultiplier = 5f;
     public float dashTime = 1f;
 
@@ -33,7 +34,7 @@ public class Dashing : MonoBehaviour, PlayerControls {
 	
 	// Update is called once per frame
 	void Update () {
-        if (ground.isGrounded && Input.GetAxis(keyName) != 0 && playerInfluence)
+        if (ground.isGrounded && (Input.GetAxis(keyName) != 0 || Input.GetAxis(controllerName) != 0) && playerInfluence)
         {
             StartCoroutine("Dash");
         }
@@ -42,6 +43,7 @@ public class Dashing : MonoBehaviour, PlayerControls {
     IEnumerator Dash()
     {
         // Start of Dash
+		b.PlaySound(2,0.7f);
         rb.velocity = rb.velocity * dashMultiplier;
         b.DisablePlayerInfluence();
         yield return new WaitForSeconds(dashTime);

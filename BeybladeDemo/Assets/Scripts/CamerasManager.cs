@@ -5,10 +5,10 @@ using UnityEngine;
 public class CamerasManager : MonoBehaviour {
 
 	[SerializeField] private PlayerCam m_leftPlayerCam;
-	[SerializeField] private Camera m_leftCam;
+	public Camera m_leftCam;
 	[SerializeField] private Vector4 m_leftDefaultRect;
 	[SerializeField] private PlayerCam m_rightPlayerCam;
-	[SerializeField] private Camera m_rightCam;
+	public Camera m_rightCam;
 	[SerializeField] private Vector4 m_rightDefaultRect;
 	[SerializeField] private Vector4 m_fullCamRect;
 	[SerializeField] private float m_transitionSpeed;

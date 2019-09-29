@@ -25,11 +25,16 @@ public class GameSystem : MonoBehaviour {
 	public Canvas player1Canvas;
 	public Canvas player2Canvas;
 
+	public void OnDestroy() {
+		StopAllCoroutines();
+	}
+
 	// Initiate 2D Mode
 	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount, float clashSpeed = 0f) {
 		if (!m_gameMode) {
 			StartCoroutine(FreezeFrame2D(attacker, defender, comboCount, clashSpeed));
 			m_gameMode = !m_gameMode;
+
 			player1Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
 			player2Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
 		}
@@ -40,10 +45,15 @@ public class GameSystem : MonoBehaviour {
 			//Enable Controls
 			StartCoroutine(FreezeFrame3D(p1, p2, bounceBack));
 			m_gameMode = !m_gameMode;
-
-			player1Canvas.worldCamera = m_cam.getMyCamera(p1.gameObject);
-			player2Canvas.worldCamera = m_cam.getMyCamera(p2.gameObject);
-			
+			Camera cam1 = m_cam.getMyCamera(p1.gameObject);
+			Camera cam2 = m_cam.getMyCamera(p2.gameObject);
+			if (cam1 == m_cam.m_leftCam) {
+				player1Canvas.worldCamera = cam1;
+				player2Canvas.worldCamera = cam2;
+			} else {
+				player1Canvas.worldCamera = cam2;
+				player2Canvas.worldCamera = cam1;
+			}
 		}
 	}
 
@@ -103,9 +113,10 @@ public class GameSystem : MonoBehaviour {
         m_cam.FocusMyCam(attacker.gameObject);
 
 		yield return new WaitForSeconds(m_delayTransition / 2);
+
 		attacker.BounceBack(defender, a_velo - d_velo);
 		yield return new WaitForSeconds(m_delayTransition / 2);
-
+		
 		//Set Velocity to 0
 		attacker.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
 		defender.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
