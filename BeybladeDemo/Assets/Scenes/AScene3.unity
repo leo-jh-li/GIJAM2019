@@ -175,7 +175,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4608768187567210, guid: dd2f1ccbe76cfd8478eb163fe175086f, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 198168681786491980, guid: dd2f1ccbe76cfd8478eb163fe175086f,
         type: 2}
@@ -1421,6 +1421,7 @@ GameObject:
   - component: {fileID: 414590355}
   - component: {fileID: 414590354}
   - component: {fileID: 414590363}
+  - component: {fileID: 414590364}
   m_Layer: 0
   m_Name: beyblade3 (2)
   m_TagString: Bey
@@ -1492,12 +1493,17 @@ MonoBehaviour:
   m_beybladePieces: []
   m_gameSystem: {fileID: 0}
   m_maxStamina: 100
-  m_stamina: 0
+  m_stamina: 100
   m_defenseMultiplier: 2
   m_attackMultiplier: 2
   m_ceventDamageThreshold: 1
   m_ceventVelocityThreshold: 1
   m_bounceDisableTime: 1
+  deathAnimator: {fileID: 414590364}
+  playerIndex: 1
+  playerExplosion: {fileID: 0}
+  deathAnimTime: 3
+  BeyVisuals: {fileID: 0}
 --- !u!65 &414590358
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1588,6 +1594,24 @@ MonoBehaviour:
   canUseShield: 0
   rotationSpeed: 300
   shieldPivot: {fileID: 151759326}
+--- !u!95 &414590364
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 414590353}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4deb3c7ad0d34c34aa06519644fa547f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &453957972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1699,14 +1723,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 527749237}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1727942388}
   - {fileID: 982404157}
   m_Father: {fileID: 1193652968}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &527749239
 MonoBehaviour:
@@ -1844,7 +1868,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 98d8be0910272a141baab2d3d25fc06b, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 98d8be0910272a141baab2d3d25fc06b, type: 2}
       propertyPath: m_Enabled
@@ -2806,7 +2830,7 @@ Prefab:
     - target: {fileID: 224549366453598024, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 201.7
+      value: 201.70001
       objectReference: {fileID: 0}
     - target: {fileID: 224549366453598024, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
         type: 2}
@@ -3713,6 +3737,7 @@ GameObject:
   - component: {fileID: 1193652974}
   - component: {fileID: 1193652975}
   - component: {fileID: 1193652976}
+  - component: {fileID: 1193652977}
   m_Layer: 0
   m_Name: beyblade3
   m_TagString: Bey
@@ -3731,6 +3756,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1207068495}
   - {fileID: 527749238}
   - {fileID: 1454489852}
   - {fileID: 1191897205}
@@ -3753,12 +3779,17 @@ MonoBehaviour:
   m_beybladePieces: []
   m_gameSystem: {fileID: 1929277908}
   m_maxStamina: 100
-  m_stamina: 0
+  m_stamina: 100
   m_defenseMultiplier: 2
   m_attackMultiplier: 2
   m_ceventDamageThreshold: 1
   m_ceventVelocityThreshold: 1
   m_bounceDisableTime: 1
+  deathAnimator: {fileID: 1193652977}
+  playerIndex: 0
+  playerExplosion: {fileID: 2089194596}
+  deathAnimTime: 5
+  BeyVisuals: {fileID: 527749238}
 --- !u!114 &1193652970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3865,6 +3896,53 @@ MonoBehaviour:
   collisionTag: Ground
   movementThresh: 1
   maxTrailHeight: 0.01
+--- !u!95 &1193652977
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1193652967}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4deb3c7ad0d34c34aa06519644fa547f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &1207068494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1207068495}
+  m_Layer: 0
+  m_Name: Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1207068495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1207068494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2089194595}
+  m_Father: {fileID: 1193652968}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1255250307
 Prefab:
   m_ObjectHideFlags: 0
@@ -5398,7 +5476,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 410886, guid: ce56f814fa0835a43aba1716e41c3173, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 19848952, guid: ce56f814fa0835a43aba1716e41c3173, type: 2}
       propertyPath: playOnAwake
@@ -5444,3 +5522,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4335282639064450, guid: eca000ab44c908d4dab395f654753038,
     type: 2}
   m_PrefabInternal: {fileID: 1793690409}
+--- !u!1001 &2089194594
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1207068495}
+    m_Modifications:
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e0609132424a24844b1d53ad3d704fd9, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!4 &2089194595 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400006, guid: e0609132424a24844b1d53ad3d704fd9,
+    type: 2}
+  m_PrefabInternal: {fileID: 2089194594}
+--- !u!198 &2089194596 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 19800006, guid: e0609132424a24844b1d53ad3d704fd9,
+    type: 2}
+  m_PrefabInternal: {fileID: 2089194594}
