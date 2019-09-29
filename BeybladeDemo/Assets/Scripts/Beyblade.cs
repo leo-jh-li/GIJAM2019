@@ -104,7 +104,6 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	}
 
 	public void TakeDamage(float dmg) {
-		Debug.Log("m_Stamina: " + m_stamina + " " + m_maxStamina + " " + playerIndex);
 		if (this.enabled == false) return;
 
 		m_stamina = (m_stamina - dmg < 0) ? 0 : m_stamina - dmg;

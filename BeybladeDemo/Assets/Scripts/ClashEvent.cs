@@ -30,15 +30,12 @@ public class ClashEvent : MonoBehaviour
 
     public void SetMaxCombo(int count) {
         maxCombo = count;
-        if (comboCallback != null) {
-            comboCallback.Invoke(maxCombo);
-        }
     }
 
     public void IncrementCombo() {
         current_combo++;
         if (comboCallback != null) {
-            comboCallback.Invoke(maxCombo);
+            comboCallback.Invoke(current_combo);
         }
     }
 
@@ -91,7 +88,6 @@ public class ClashEvent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Hello");
 
 
         if (!isAttacking)
@@ -164,7 +160,6 @@ public class ClashEvent : MonoBehaviour
             Collider [] colliders = Physics.OverlapSphere(m_attacker.transform.position, shieldCollisionSize);
             foreach (Collider col in colliders) {
                 if (col.tag == "Shield") {
-                    Debug.Log("Hit shield");
                     //Increment Combo and lose a Max Combo
                     IncrementCombo();
                     SetMaxCombo(GetMaxCombo() - 1);
@@ -179,10 +174,8 @@ public class ClashEvent : MonoBehaviour
 
         tween.setOnComplete(() =>
         {
-            Debug.Log("Did not hit shield");
             IncrementCombo();
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
-            this.GetComponent<GameUITextMaker>().createText(m_defender.transform.position, m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);
             this.tweenEnemyKnockback(relativeDirection, dir, cross);
         });
