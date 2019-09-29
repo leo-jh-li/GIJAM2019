@@ -1153,6 +1153,12 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 20450844096762750, guid: efb40b745f89a8041922ec7c724c4f4d,
     type: 2}
   m_PrefabInternal: {fileID: 486153517}
+--- !u!114 &841436673 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114555841905219848, guid: 120530589d2334e78ba4019c5cc3a069,
+    type: 2}
+  m_PrefabInternal: {fileID: 1675812690}
+  m_Script: {fileID: 11500000, guid: 2f5453bdac94d43c6b15df4d7e3d195a, type: 3}
 --- !u!4 &1001494038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4276312553291870, guid: efb40b745f89a8041922ec7c724c4f4d,
@@ -1407,16 +1413,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 223164442231686570, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
-        type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1917937695}
     - target: {fileID: 114889387748870444, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
         type: 2}
       propertyPath: player
       value: 
-      objectReference: {fileID: 512292734}
+      objectReference: {fileID: 841436673}
     - target: {fileID: 114889387748870444, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
         type: 2}
       propertyPath: clashEvent
@@ -1426,6 +1427,11 @@ Prefab:
       propertyPath: m_Name
       value: Player1Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 223164442231686570, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1917937695}
     - target: {fileID: 224774505581789286, guid: dcba7e2f553e60c4cbed97fb170f5ad3,
         type: 2}
       propertyPath: m_AnchorMax.x

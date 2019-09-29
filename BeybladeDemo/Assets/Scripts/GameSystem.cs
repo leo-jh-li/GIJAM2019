@@ -28,6 +28,7 @@ public class GameSystem : MonoBehaviour {
 		if (!m_gameMode) {
 			StartCoroutine(FreezeFrame2D(attacker, defender, comboCount));
 			m_gameMode = !m_gameMode;
+
 			player1Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
 			player2Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
 		}
@@ -38,10 +39,15 @@ public class GameSystem : MonoBehaviour {
 			//Enable Controls
 			StartCoroutine(FreezeFrame3D(p1, p2, bounceBack));
 			m_gameMode = !m_gameMode;
-
-			player1Canvas.worldCamera = m_cam.getMyCamera(p1.gameObject);
-			player2Canvas.worldCamera = m_cam.getMyCamera(p2.gameObject);
-			
+			Camera cam1 = m_cam.getMyCamera(p1.gameObject);
+			Camera cam2 = m_cam.getMyCamera(p2.gameObject);
+			if (cam1 == m_cam.m_leftCam) {
+				player1Canvas.worldCamera = cam1;
+				player2Canvas.worldCamera = cam2;
+			} else {
+				player1Canvas.worldCamera = cam2;
+				player2Canvas.worldCamera = cam1;
+			}
 		}
 	}
 
