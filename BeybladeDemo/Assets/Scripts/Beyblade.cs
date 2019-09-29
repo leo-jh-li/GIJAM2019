@@ -37,6 +37,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	public float deathAnimTime = 3f;
 
 	public Transform BeyVisuals;
+	public UltimateSkillUI ultiSkillUi;
 
 	float ComputeCollisionResult(BeybladePiece thisPiece, BeybladePiece otherPiece) {
 		Beyblade otherBey = otherPiece.m_parent;
@@ -159,6 +160,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	public void UltimateBeybladeCollision(UltimateCollider thisPiece, BeybladePiece otherPiece) {
 		thisPiece.gameObject.SetActive(false);
+		this.ultiSkillUi.doUltimate();
 		m_gameSystem.Initiate2D(this, otherPiece.m_parent, 40, 0.1f);
 	}
 
