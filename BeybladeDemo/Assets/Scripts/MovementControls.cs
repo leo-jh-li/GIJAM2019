@@ -34,6 +34,7 @@ public class MovementControls : MonoBehaviour, PlayerControls {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log(playerInfluence);
         Vector3 vel = new Vector3((Input.GetKey(right) && playerInfluence ? 1:0) - (Input.GetKey(left) && playerInfluence ? 1:0),
             0,
             (Input.GetKey(up) && playerInfluence ? 1 : 0) - (Input.GetKey(down) && playerInfluence ? 1 : 0)).normalized * m_maxSpeed;

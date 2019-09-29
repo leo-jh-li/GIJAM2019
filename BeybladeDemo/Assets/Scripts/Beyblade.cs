@@ -119,6 +119,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	public void Die() {
 		this.DisablePlayerInfluence();
+		this.deathAnimator.enabled = true;
 		this.deathAnimator.Play("DeathAnim");
 		StartCoroutine(deathAnimCoroutine());
 	}
@@ -168,6 +169,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 		m_stamina = m_maxStamina;	
 		this.TakeDamage(0);
 		m_collision = false;
+		this.deathAnimator.enabled = false;
 	}
 
 	void Update() {
