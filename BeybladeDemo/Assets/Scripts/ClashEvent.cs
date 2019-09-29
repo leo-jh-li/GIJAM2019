@@ -107,7 +107,6 @@ public class ClashEvent : MonoBehaviour
         tween.setOnUpdate((float val) => {
             Collider [] colliders = Physics.OverlapSphere(m_attacker.transform.position, shieldCollisionSize);
             foreach (Collider col in colliders) {
-                Debug.Log(col.tag);
                 if (col.tag == "Shield") {
                     Debug.Log("Hit shield");
                     LeanTween.cancel(m_attacker.gameObject, tween.id);
@@ -163,7 +162,6 @@ public class ClashEvent : MonoBehaviour
 			//tween2.setEaseOutCubic();
             tween2.setOnComplete(() =>
             {
-                Debug.Log("Tween 2 complete");
                 isAttacking = false;
                 m_attacker.GetComponent<Collider>().isTrigger = false;
            
