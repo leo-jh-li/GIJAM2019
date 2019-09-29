@@ -13,6 +13,15 @@ public class CamerasManager : MonoBehaviour {
 	[SerializeField] private Vector4 m_fullCamRect;
 	[SerializeField] private float m_transitionSpeed;
 
+   public Camera getMyCamera(GameObject player) {
+	   if (m_leftPlayerCam.followTarget.gameObject == player) {
+	     return m_leftCam;
+	   } else {
+		   return m_rightCam;
+	   }
+   }
+
+ 
 	private void Start () {
 		// Set split screen
 		m_leftCam.rect = new Rect(m_leftDefaultRect.x, m_leftDefaultRect.y, m_leftDefaultRect.z, m_leftDefaultRect.w);

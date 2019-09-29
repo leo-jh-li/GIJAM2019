@@ -31,10 +31,8 @@ public class BeyCollisionEffects : MonoBehaviour {
 
 		if (trailRenderer.emitting && !Physics.Raycast(transform.position + Vector3.up * 1f, Vector3.down, maxTrailHeight, groundLayer)) {
 			trailRenderer.emitting = false;
-			Debug.Log("Stop emitting");
 		} else if (Physics.Raycast(transform.position +  Vector3.up * 1f, Vector3.down, maxTrailHeight, groundLayer) && !trailRenderer.emitting) {
 			trailRenderer.emitting = true;
-			Debug.Log("Start emitting");
 		}
 
 
