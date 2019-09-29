@@ -8,7 +8,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	public GameObject[] m_beybladePieces;
 	public GameSystem m_gameSystem;
 	public float m_maxStamina = 100f;
-	[SerializeField]float m_stamina;
+	public float m_stamina;
 
 	// Based on Shielding [1, m_defenseMultiplier]
 	public float m_defenseMultiplier;
@@ -173,7 +173,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	void Start() {
 		m_mc = GetComponent<MovementControls>();
-		m_stamina = m_maxStamina;	
+		// m_stamina = m_maxStamina;
 		this.TakeDamage(0);
 		m_collision = false;
 		this.deathAnimator.enabled = false;

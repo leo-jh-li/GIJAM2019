@@ -230,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a438b45ae5699d478bced261e8c7cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_countdownText: {fileID: 0}
+  m_countdownText: {fileID: 114932932759112110}
   m_countdownLength: 3
   m_startMessage: GO
   m_startMessageStartZoom: 0.5
@@ -247,13 +247,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cc476052733b847a82be17872b8f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
   mashControls:
   - {fileID: 0}
   - {fileID: 0}
   mashMeters:
   - {fileID: 114765839632029760}
   - {fileID: 114868113483556762}
-  mashDuration: 3
+  mashDuration: 5
   topMashCount: 30
 --- !u!114 &114684663232906878
 MonoBehaviour:

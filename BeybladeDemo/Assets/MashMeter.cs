@@ -7,7 +7,7 @@ public class MashMeter : MonoBehaviour {
 
 	public Image meterContent;
 
-	private void Start();
+	private void Start()
 	{
 		meterContent.fillAmount = 0;
 	}
