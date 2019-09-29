@@ -139,7 +139,7 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -820,7 +820,6 @@ MonoBehaviour:
   m_attacker: {fileID: 0}
   m_defender: {fileID: 0}
   DefaultAttackDuration: 0.5
-  attackDuration: 0.5
   attackAmplitude: 25
   maxDistanceThresh: 50
   maxDistanceThreshOffset: 20
@@ -856,6 +855,7 @@ MonoBehaviour:
   p1: {fileID: 631656941}
   p2: {fileID: 1897369556}
   m_cam: {fileID: 1145076364}
+  m_dirLight: {fileID: 0}
 --- !u!4 &2048178766 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4788471726660862, guid: 120530589d2334e78ba4019c5cc3a069,
