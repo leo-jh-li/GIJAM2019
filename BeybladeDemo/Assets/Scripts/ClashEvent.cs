@@ -20,6 +20,8 @@ public class ClashEvent : MonoBehaviour
     public float maxDistanceThreshOffset = 10f;
     public float topDownOffset = 10f;
 
+
+    public float shieldCollisionSize = 4f;
     public void SetPlayers(ClashEventModule attacker, ClashEventModule defender)
     {
         m_attacker = attacker;
@@ -55,20 +57,20 @@ public class ClashEvent : MonoBehaviour
             Vector3 cross = Vector3.Cross(dir, m_attacker.transform.TransformDirection(Vector3.up));
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.up, dir, cross);
+                this.triggerAnimation(m_defender.transform.position + cross * 5f, Vector3.up, dir, cross);
             }
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.down, dir, cross);
+                this.triggerAnimation(m_defender.transform.position - cross * 5f, Vector3.down, dir, cross);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.back, dir, cross);
+                this.triggerAnimation(m_defender.transform.position - dir * 5f, Vector3.back, dir, cross);
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.forward, dir, cross);
+                this.triggerAnimation(m_defender.transform.position + dir * 5f, Vector3.forward, dir, cross);
             }
         }
     }
@@ -84,9 +86,7 @@ public class ClashEvent : MonoBehaviour
     void triggerAnimation(Vector3 end, Vector3 relativeDirection, Vector3 dir, Vector3 cross)
     {
         isAttacking = true;
-        m_attacker.GetComponent<Rigidbody>().detectCollisions = false;
-        m_attacker.GetComponent<Rigidbody>().isKinematic = true;
-        m_attacker.GetComponent<Rigidbody>().useGravity = false;
+        m_attacker.GetComponent<Collider>().isTrigger = true;
         List<Vector3> list = new List<Vector3>();
         list.Add(m_attacker.transform.position);
 
@@ -101,9 +101,31 @@ public class ClashEvent : MonoBehaviour
 			duration *= 0.5f;
 		}
         LTDescr tween = LeanTween.move(m_attacker.gameObject, list.ToArray(), duration);
+        int id = tween.id;
 		//tween.setEaseInCubic();
+
+        tween.setOnUpdate((float val) => {
+            Collider [] colliders = Physics.OverlapSphere(m_attacker.transform.position, shieldCollisionSize);
+            foreach (Collider col in colliders) {
+                Debug.Log(col.tag);
+                if (col.tag == "Shield") {
+                    Debug.Log("Hit shield");
+                    LeanTween.cancel(m_attacker.gameObject, tween.id);
+                    this.nextTween(end, relativeDirection, list, dir, duration);
+                    break;
+                }
+            }
+
+        });
+
         tween.setOnComplete(() =>
         {
+            Debug.Log("Did not hit shield");
+            this.nextTween(end, relativeDirection, list, dir, duration);
+        });
+    }
+
+    LTDescr nextTween(Vector3 end, Vector3 relativeDirection, List<Vector3> list, Vector3 dir, float duration) {
             if (relativeDirection != Vector3.forward) {
                 list.Reverse();
             }
@@ -136,25 +158,32 @@ public class ClashEvent : MonoBehaviour
                 }
             }
 
+
             LTDescr tween2 = LeanTween.move(m_attacker.gameObject, list.ToArray(), duration);
 			//tween2.setEaseOutCubic();
             tween2.setOnComplete(() =>
             {
+                Debug.Log("Tween 2 complete");
                 isAttacking = false;
-                m_attacker.GetComponent<Rigidbody>().detectCollisions = true;
-                m_attacker.GetComponent<Rigidbody>().isKinematic = false;
-                m_attacker.GetComponent<Rigidbody>().useGravity = true;
+                m_attacker.GetComponent<Collider>().isTrigger = false;
+           
             });
-        });
+
+            return tween2;
     }
 
     void getRelativeDirection(List<Vector3> list, Vector3 relativeDirection, Vector3 end, Vector3 dir, Vector3 cross)
     {
-        if (relativeDirection == Vector3.up || relativeDirection == Vector3.down)
+        if (relativeDirection == Vector3.up )
         {
             // left/right
             Vector3 v2 = m_attacker.transform.position + 0.33f * dir + cross * attackAmplitude;
             Vector3 v3 = m_attacker.transform.position + 0.66f * dir + cross * attackAmplitude;
+            list.Add(getTopDownPos(v2));
+            list.Add(getTopDownPos(v3));
+        } else if (relativeDirection == Vector3.down) {
+            Vector3 v2 = m_attacker.transform.position + 0.33f * dir + -cross * attackAmplitude;
+            Vector3 v3 = m_attacker.transform.position + 0.66f * dir + -cross * attackAmplitude;
             list.Add(getTopDownPos(v2));
             list.Add(getTopDownPos(v3));
         }
