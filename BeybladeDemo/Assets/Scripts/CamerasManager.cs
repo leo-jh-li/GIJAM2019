@@ -13,6 +13,15 @@ public class CamerasManager : MonoBehaviour {
 	[SerializeField] private Vector4 m_fullCamRect;
 	[SerializeField] private float m_transitionSpeed;
 
+   public Camera getMyCamera(GameObject player) {
+	   if (m_leftPlayerCam.followTarget.gameObject == player) {
+	     return m_leftCam;
+	   } else {
+		   return m_rightCam;
+	   }
+   }
+
+ 
 	private void Start () {
 		// Set split screen
 		m_leftCam.rect = new Rect(m_leftDefaultRect.x, m_leftDefaultRect.y, m_leftDefaultRect.z, m_leftDefaultRect.w);
@@ -53,16 +62,29 @@ public class CamerasManager : MonoBehaviour {
 		}
 	}
 
-	// Buttons for testing
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.Keypad0)) {
-			StartCoroutine(ResetToSplitScreen());
-		}
-		if (Input.GetKeyDown(KeyCode.Keypad1)) {
+	public void FocusMyCam(GameObject follower) {
+		if(m_leftPlayerCam.followTarget.gameObject == follower) {
 			StartCoroutine(FocusLeftCam());
 		}
-		if (Input.GetKeyDown(KeyCode.Keypad2)) {
+		else {
 			StartCoroutine(FocusRightCam());
 		}
+	}
+
+	public void ResetCameras() {
+		StartCoroutine(ResetToSplitScreen());
+	}
+
+	// Buttons for testing
+	void Update() {
+		// if (Input.GetKeyDown(KeyCode.Keypad0)) {
+		// 	StartCoroutine(ResetToSplitScreen());
+		// }
+		// if (Input.GetKeyDown(KeyCode.Keypad1)) {
+		// 	StartCoroutine(FocusLeftCam());
+		// }
+		// if (Input.GetKeyDown(KeyCode.Keypad2)) {
+		// 	StartCoroutine(FocusRightCam());
+		// }
 	}
 }

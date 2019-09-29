@@ -28,9 +28,13 @@ public class ClashEventModule : MonoBehaviour, PlayerControls {
 		return command;
 	}
 
+	public void ResetCommand() {
+		command = -1;
+	}
+
 	// Use this for initialization
 	void Start () {
-		command = 0;
+		command = -1;
 	}
 	
 	// Update is called once per frame

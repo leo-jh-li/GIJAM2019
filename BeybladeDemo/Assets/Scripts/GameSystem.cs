@@ -13,11 +13,19 @@ public class GameSystem : MonoBehaviour {
 	//Delay Transition Modes
 	public float m_delayTransition;
 
+	// Cameras
+	public CamerasManager m_cam;
+
+	public Canvas player1Canvas;
+	public Canvas player2Canvas;
+
 	// Initiate 2D Mode
 	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount) {
 		if (!m_gameMode) {
 			StartCoroutine(FreezeFrame2D(attacker, defender, comboCount));
 			m_gameMode = !m_gameMode;
+			player1Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
+			player2Canvas.worldCamera = m_cam.getMyCamera(attacker.gameObject);
 		}
 	}
 
@@ -26,13 +34,13 @@ public class GameSystem : MonoBehaviour {
 			//Enable Controls
 			StartCoroutine(FreezeFrame3D(p1, p2, bounceBack));
 			m_gameMode = !m_gameMode;
+
+			player1Canvas.worldCamera = m_cam.getMyCamera(p1.gameObject);
+			player2Canvas.worldCamera = m_cam.getMyCamera(p2.gameObject);
+			
 		}
 	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -59,6 +67,13 @@ public class GameSystem : MonoBehaviour {
 		attacker.GetComponent<ClashEventModule>().enabled = true;
 		defender.GetComponent<ClashEventModule>().enabled = true;
 
+		//Disable Pieces
+        attacker.DisableBeybladePieces();
+        defender.DisableBeybladePieces();
+
+        //Focused Camera
+        m_cam.FocusMyCam(attacker.gameObject);
+
 		yield return new WaitForSeconds(m_delayTransition / 2);
 		attacker.BounceBack(defender, a_velo - d_velo);
 		yield return new WaitForSeconds(m_delayTransition / 2);
@@ -74,16 +89,15 @@ public class GameSystem : MonoBehaviour {
 		defender.GetComponentInChildren<MovementControls>().enabled = true;
 		defender.GetComponentInChildren<TiltControls>().enabled = true;
 
-		//Disable Pieces
-        attacker.DisableBeybladePieces();
-        defender.DisableBeybladePieces();
-
         //Disable Controls
         attacker.DisablePlayerInfluence();
         defender.DisablePlayerInfluence();
 
 		//Designate Combo Count
 		m_cevent.SetMaxCombo(comboCount);
+
+		//Enable Shield
+		defender.GetComponent<ShieldController>().enabled = true;
 
 		//Start the event
 		m_cevent.enabled = true;
@@ -101,7 +115,14 @@ public class GameSystem : MonoBehaviour {
 		p2.GetComponentInChildren<TiltControls>().enabled = true;
 
 		//TODO: Hard Coded Value
-		p1.BounceBack(p2, bounceBack, 150);
+		p1.BounceBack(p2, bounceBack, 200);
+
+		//UnFocus Camera
+		m_cam.ResetCameras();
+
+		//Disable Shield
+		p1.GetComponent<ShieldController>().enabled = false;
+		p2.GetComponent<ShieldController>().enabled = false;
 
 		yield return new WaitForSeconds(m_delayTransition);
 
@@ -112,5 +133,9 @@ public class GameSystem : MonoBehaviour {
         //Enable Controls
         p1.EnablePlayerInfluence();
         p2.EnablePlayerInfluence();
+
+        //Reset Collision
+        p1.ResetCollision();
+        p2.ResetCollision();
 	}
 }

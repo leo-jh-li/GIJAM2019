@@ -25,6 +25,7 @@ public class BeybladePiece : MonoBehaviour {
 		BeybladePiece piece = other.GetComponent<BeybladePiece>();
 		if(piece) {
 			m_parent.ResetCollision();
+			piece.m_parent.ResetCollision();
 		}	
 	}
 }
