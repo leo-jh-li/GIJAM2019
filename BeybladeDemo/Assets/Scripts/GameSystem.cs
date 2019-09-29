@@ -21,10 +21,10 @@ public class GameSystem : MonoBehaviour {
 		}
 	}
 
-	public void Initiate3D(Beyblade p1, Beyblade p2) {
+	public void Initiate3D(Beyblade p1, Beyblade p2, Vector3 bounceBack) {
 		if(m_gameMode) {
 			//Enable Controls
-			StartCoroutine(FreezeFrame3D(p1, p2));
+			StartCoroutine(FreezeFrame3D(p1, p2, bounceBack));
 			m_gameMode = !m_gameMode;
 		}
 	}
@@ -47,6 +47,9 @@ public class GameSystem : MonoBehaviour {
 		defender.GetComponentInChildren<MovementControls>().enabled = false;
 		defender.GetComponentInChildren<TiltControls>().enabled = false;
 
+		Vector3 a_velo = attacker.GetComponentInChildren<Rigidbody>().velocity;
+		Vector3 d_velo = defender.GetComponentInChildren<Rigidbody>().velocity;
+
 		//Set Velocity to 0
 		attacker.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
 		defender.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
@@ -56,7 +59,13 @@ public class GameSystem : MonoBehaviour {
 		attacker.GetComponent<ClashEventModule>().enabled = true;
 		defender.GetComponent<ClashEventModule>().enabled = true;
 
-		yield return new WaitForSeconds(m_delayTransition);
+		yield return new WaitForSeconds(m_delayTransition / 2);
+		attacker.BounceBack(defender, a_velo - d_velo);
+		yield return new WaitForSeconds(m_delayTransition / 2);
+
+		//Set Velocity to 0
+		attacker.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
+		defender.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
 
 		//Unfreeze physics
 		attacker.GetComponentInChildren<MovementControls>().enabled = true;
@@ -80,7 +89,7 @@ public class GameSystem : MonoBehaviour {
 		m_cevent.enabled = true;
 	}
 
-	IEnumerator FreezeFrame3D(Beyblade p1, Beyblade p2) {
+	IEnumerator FreezeFrame3D(Beyblade p1, Beyblade p2, Vector3 bounceBack) {
 		p1.GetComponent<ClashEventModule>().enabled = false;
 		p2.GetComponent<ClashEventModule>().enabled = false;
 
@@ -90,6 +99,9 @@ public class GameSystem : MonoBehaviour {
 
 		p2.GetComponentInChildren<MovementControls>().enabled = true;
 		p2.GetComponentInChildren<TiltControls>().enabled = true;
+
+		//TODO: Hard Coded Value
+		p1.BounceBack(p2, bounceBack, 150);
 
 		yield return new WaitForSeconds(m_delayTransition);
 

@@ -42,8 +42,6 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	void BounceBack(Beyblade other, float collisionResult) {
 		Vector3 collisionDir = GetComponent<Rigidbody>().velocity - other.GetComponent<Rigidbody>().velocity.normalized;
-		DisablePlayerInfluence();
-		Invoke("EnablePlayerInfluence", m_bounceDisableTime);
 
 		//TODO: FIX HARDCODED MINIMUM
 		Vector3 bounceBack = m_mc.m_maxSpeed * Utilities.sigmoid(collisionResult, 4) * collisionDir / 3;
@@ -52,6 +50,13 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 		}
 		GetComponent<Rigidbody>().velocity = -1 * bounceBack;
 		other.GetComponent<Rigidbody>().velocity = bounceBack;
+	}
+
+	public void BounceBack(Beyblade other, Vector3 dir, float magnitude = 10) {
+		dir = dir.normalized * magnitude;
+		print(dir);
+		GetComponent<Rigidbody>().velocity = -1 * dir;
+		other.GetComponent<Rigidbody>().velocity = dir;
 	}
 
 	//Disable/Enable Beyblade Part Colliders
@@ -100,6 +105,8 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 			m_gameSystem.Initiate2D(this, otherPiece.m_parent, 10);
 		}
 		else if(!m_collision && result > 0f) {
+			DisablePlayerInfluence();
+			Invoke("EnablePlayerInfluence", m_bounceDisableTime);
 			BounceBack(otherPiece.m_parent, result);
 			otherPiece.m_parent.TakeDamage(result);
 		}

@@ -42,7 +42,6 @@ public class P2TiltControls : MonoBehaviour {
 			z_tilt = -1 * m_maxTilt * sigmoid(m_maxTilt/m_maxTilt * 6, 5);
 		}
 
-    Vector3 requestedTilt = new Vector3(x_tilt,  transform.rotation.y, z_tilt);
 
     RaycastHit hit;
     Vector3 downDirection = center.transform.TransformDirection(Vector3.down);

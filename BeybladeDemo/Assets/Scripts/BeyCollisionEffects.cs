@@ -17,6 +17,7 @@ public class BeyCollisionEffects : MonoBehaviour {
 
 
 	private int groundLayer;
+
 	void Start() {
 		groundLayer = LayerMask.GetMask("floor");
 	}
@@ -45,4 +46,5 @@ public class BeyCollisionEffects : MonoBehaviour {
 			bottomSparksOneShot.Play();
 		}
 	}
+
 }
