@@ -38,7 +38,7 @@ public class MovementControls : MonoBehaviour, PlayerControls {
 	// Update is called once per frame
 	void Update () {
 		Vector3 vel = Vector3.zero;
-		if (playerInfluence) {
+		if(ground.isGrounded && playerInfluence) {
 			// Keyboard input
 			vel = new Vector3((Input.GetKey(right) ? 1:0) - (Input.GetKey(left) ? 1:0),
 				0,
