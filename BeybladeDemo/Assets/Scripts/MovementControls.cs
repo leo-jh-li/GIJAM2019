@@ -44,9 +44,12 @@ public class MovementControls : MonoBehaviour, PlayerControls {
 				0,
 				(Input.GetKey(up) ? 1 : 0) - (Input.GetKey(down) ? 1 : 0));
 			// Controller input (has priority over keyboard)
-			vel = new Vector3(Input.GetAxis(horizontal),
+			Vector3 controllerVel = new Vector3(Input.GetAxis(horizontal),
 				0,
 				Input.GetAxis(vertical));
+				if(controllerVel!=Vector3.zero){
+					vel = controllerVel;
+				}
 		}
 		vel = Vector3.ProjectOnPlane(vel.normalized * m_maxSpeed, ground.groundNormal);
 		//print(vel.ToString());

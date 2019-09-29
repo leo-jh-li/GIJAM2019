@@ -699,7 +699,7 @@ Prefab:
     - target: {fileID: 114326626173356828, guid: 120530589d2334e78ba4019c5cc3a069,
         type: 2}
       propertyPath: keyName
-      value: Jump2
+      value: P2_Square
       objectReference: {fileID: 0}
     - target: {fileID: 96298039424258292, guid: 120530589d2334e78ba4019c5cc3a069,
         type: 2}
@@ -765,6 +765,21 @@ Prefab:
         type: 2}
       propertyPath: right
       value: right
+      objectReference: {fileID: 0}
+    - target: {fileID: 114326626173356828, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: controllerName
+      value: P2_Square
+      objectReference: {fileID: 0}
+    - target: {fileID: 114400943411158632, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: horizontal
+      value: P2_Horizontal
+      objectReference: {fileID: 0}
+    - target: {fileID: 114400943411158632, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: vertical
+      value: P2_Vertical
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
@@ -1272,6 +1287,26 @@ Prefab:
       propertyPath: m_gameSystem
       value: 
       objectReference: {fileID: 1929277908}
+    - target: {fileID: 114326626173356828, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: keyName
+      value: P1_Square
+      objectReference: {fileID: 0}
+    - target: {fileID: 114326626173356828, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: controllerName
+      value: P1_Square
+      objectReference: {fileID: 0}
+    - target: {fileID: 114400943411158632, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: horizontal
+      value: P1_Horizontal
+      objectReference: {fileID: 0}
+    - target: {fileID: 114400943411158632, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: vertical
+      value: P1_Vertical
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
   m_IsPrefabAsset: 0
@@ -1580,8 +1615,6 @@ MonoBehaviour:
   m_cevent: {fileID: 1929277906}
   m_delayTransition: 2
   m_cam: {fileID: 1145076364}
-  player1Cam: {fileID: 1917937695}
-  player2Cam: {fileID: 747918630}
   player1Canvas: {fileID: 2065446790}
   player2Canvas: {fileID: 2065286617}
 --- !u!4 &2048178766 stripped
