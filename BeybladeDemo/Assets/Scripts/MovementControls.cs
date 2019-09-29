@@ -34,10 +34,12 @@ public class MovementControls : MonoBehaviour, PlayerControls {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(playerInfluence);
-        Vector3 vel = new Vector3((Input.GetKey(right) && playerInfluence ? 1:0) - (Input.GetKey(left) && playerInfluence ? 1:0),
-            0,
-            (Input.GetKey(up) && playerInfluence ? 1 : 0) - (Input.GetKey(down) && playerInfluence ? 1 : 0)).normalized * m_maxSpeed;
+		Vector3 vel = Vector3.zero;
+		if(ground.isGrounded) {
+        	vel = new Vector3((Input.GetKey(right) && playerInfluence ? 1:0) - (Input.GetKey(left) && playerInfluence ? 1:0),
+            	0,
+            	(Input.GetKey(up) && playerInfluence ? 1 : 0) - (Input.GetKey(down) && playerInfluence ? 1 : 0)).normalized * m_maxSpeed;
+		}
 
         vel = Vector3.ProjectOnPlane(vel, ground.groundNormal);
         //print(vel.ToString());

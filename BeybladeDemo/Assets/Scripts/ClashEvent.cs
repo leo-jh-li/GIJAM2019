@@ -116,6 +116,8 @@ public class ClashEvent : MonoBehaviour
             {
                 this.triggerAnimation(m_defender.transform.position - dir * 5f, Vector3.back, dir, cross);
             }
+
+            m_attacker.ResetCommand();
         }
 
 

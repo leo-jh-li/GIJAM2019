@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class ShieldController : MonoBehaviour {
 
-	public bool canUseShield = false;
 	public float rotationSpeed;
 	public Transform shieldPivot;
-	void Start () {
-		/// Testing :
-		canUseShield = true;
+
+	public ClashEventModule defender;
+
+	void OnEnable () {
+		shieldPivot.gameObject.SetActive(true);
 	}
 	
+	void OnDisable() {
+		shieldPivot.gameObject.SetActive(false);
+	}
+
 	// Update is called once per frame
 	void Update () {
-		if (!canUseShield) return;
-
-		if (Input.GetKey(KeyCode.I)) {
+		if (defender.GetCommand() == 0) {
 			shieldPivot.Rotate(new Vector3(0, -rotationSpeed * Time.deltaTime, 0));
-		} else if (Input.GetKey(KeyCode.O)) {
+		} else if (defender.GetCommand() == 2) {
 			shieldPivot.Rotate(new Vector3(0, rotationSpeed * Time.deltaTime, 0));
 		}
+		defender.ResetCommand();
 	}
 }

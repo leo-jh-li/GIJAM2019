@@ -47,25 +47,24 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	bool ClashEventDecision(Beyblade other, float collisionResult) {
 		return (collisionResult >= m_ceventDamageThreshold || 
-			GetComponent<Rigidbody>().velocity.magnitude >= m_ceventVelocityThreshold ||
-			other.GetComponent<Rigidbody>().velocity.magnitude >= m_ceventVelocityThreshold) && collisionResult > 0f;
+			GetComponent<Rigidbody>().velocity.magnitude + other.GetComponent<Rigidbody>().velocity.magnitude >= m_ceventVelocityThreshold) 
+			&& collisionResult > 0f;
 	}
 
 	void BounceBack(Beyblade other, float collisionResult) {
-		Vector3 collisionDir = GetComponent<Rigidbody>().velocity - other.GetComponent<Rigidbody>().velocity.normalized;
+		Vector3 collisionDir = (GetComponent<Rigidbody>().velocity - other.GetComponent<Rigidbody>().velocity).normalized;
 
 		//TODO: FIX HARDCODED MINIMUM
-		Vector3 bounceBack = m_mc.m_maxSpeed * Utilities.sigmoid(collisionResult, 4) * collisionDir / 3;
-		if (bounceBack.magnitude < 10) {
-			bounceBack = 10 * collisionDir;
+		Vector3 bounceBack = m_mc.m_maxSpeed * Utilities.sigmoid(collisionResult, 4) * collisionDir;
+		if (bounceBack.magnitude < 60) {
+			bounceBack = 60 * collisionDir;
 		}
 		GetComponent<Rigidbody>().velocity = -1 * bounceBack;
 		other.GetComponent<Rigidbody>().velocity = bounceBack;
 	}
 
-	public void BounceBack(Beyblade other, Vector3 dir, float magnitude = 10) {
+	public void BounceBack(Beyblade other, Vector3 dir, float magnitude = 60) {
 		dir = dir.normalized * magnitude;
-		print(dir);
 		GetComponent<Rigidbody>().velocity = -1 * dir;
 		other.GetComponent<Rigidbody>().velocity = dir;
 	}
@@ -142,8 +141,10 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	public void BeybladeCollision(BeybladePiece thisPiece, BeybladePiece otherPiece) {
 		float result = ComputeCollisionResult(thisPiece, otherPiece);
+		print(result + gameObject.name);
 		if(ClashEventDecision(otherPiece.m_parent, result) && !m_collision) {
-			otherPiece.m_parent.TakeDamage(result);
+			otherPiece.m_parent.TakeDamage(4 * result);
+			print(thisPiece.gameObject.name + " " + gameObject.name + " -> " + otherPiece.gameObject.name + " " + otherPiece.m_parent.name);
 			//TODO: Determine combo count
 			m_gameSystem.Initiate2D(this, otherPiece.m_parent, 10);
 		}
