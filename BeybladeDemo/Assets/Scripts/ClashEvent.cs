@@ -192,12 +192,10 @@ public class ClashEvent : MonoBehaviour
         RaycastHit hit;
         if (Vector3.Distance(m_attacker.transform.position, Vector3.zero) > maxDistanceThresh) {
             orig = (orig - Vector3.zero).normalized * (maxDistanceThresh - maxDistanceThreshOffset);
-            Debug.Log("A");
         }
 
         if (Physics.Raycast(new Vector3( orig.x, 999999f, orig.z), Vector3.down, out hit, 99999999f, groundLayer)) {
             orig = new Vector3(orig.x, hit.point.y + topDownOffset, orig.z);
-            Debug.Log("B");
         }
 
    
