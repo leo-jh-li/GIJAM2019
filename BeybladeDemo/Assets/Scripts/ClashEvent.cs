@@ -49,8 +49,9 @@ public class ClashEvent : MonoBehaviour
     void Start()
     {
         groundLayer = LayerMask.GetMask("floor");
+
         //Init
-        m_attackTargets = new List<Vector3>();
+        //m_attackTargets = new List<Vector3>();
 
         //Compute Target points
         // Vector3 collisionDir = m_defender.transform.position - m_attacker.transform.position;
@@ -89,6 +90,13 @@ public class ClashEvent : MonoBehaviour
             {
                 this.triggerAnimation(m_defender.transform.position, Vector3.back, dir, cross);
             }
+        }
+
+        if(current_combo == maxCombo) {
+            m_gameSystem.Initiate3D(
+                m_attacker.gameObject.GetComponent<Beyblade>(), 
+                m_defender.gameObject.GetComponent<Beyblade>());
+            this.enabled = false;
         }
 
         if(current_combo == maxCombo) {
