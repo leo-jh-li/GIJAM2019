@@ -164,6 +164,7 @@ public class ClashEvent : MonoBehaviour
             IncrementCombo();
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);
+            this.tweenEnemyKnockback(relativeDirection, dir, cross);
         });
     }
 
@@ -209,6 +210,32 @@ public class ClashEvent : MonoBehaviour
             m_attacker.GetComponent<Collider>().isTrigger = false;
        
         });
+
+        return tween2;
+    }
+
+    LTDescr tweenEnemyKnockback(Vector3 relativeDirection, Vector3 dir, Vector3 cross) {
+        List<Vector3> list = new List<Vector3>();
+        Vector3 origPos = m_defender.transform.position;
+        list.Add(m_defender.transform.position);
+
+        if (relativeDirection == Vector3.up) {
+            list.Add(m_defender.transform.position + -cross * attackAmplitude);
+            list.Add(m_defender.transform.position + -cross * attackAmplitude);
+        } else if (relativeDirection == Vector3.down) {
+            list.Add(m_defender.transform.position + cross * attackAmplitude);
+            list.Add(m_defender.transform.position + cross * attackAmplitude);
+        } else if (relativeDirection == Vector3.forward) {
+            list.Add(m_defender.transform.position - dir * attackAmplitude);
+            list.Add(m_defender.transform.position - dir * attackAmplitude);
+        } else {
+            list.Add(m_defender.transform.position + dir * attackAmplitude);
+            list.Add(m_defender.transform.position + dir * attackAmplitude);
+        }
+
+        list.Add(origPos);
+        LTDescr tween2 = LeanTween.move(m_defender.gameObject, list.ToArray(), 0.25f);
+        tween2.setEaseOutQuad();
 
         return tween2;
     }
