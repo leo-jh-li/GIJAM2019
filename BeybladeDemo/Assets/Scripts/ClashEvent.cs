@@ -4,26 +4,45 @@ using UnityEngine;
 
 public class ClashEvent : MonoBehaviour
 {
+    public GameSystem m_gameSystem;
+
     //Players
     public ClashEventModule m_attacker;
     public ClashEventModule m_defender;
-
-    //Attacker Target [L, R, U, D]
-    List<Vector3> m_attackTargets;
 
     public float attackDuration = 1f;
     public float attackAmplitude = 10f;
     bool isAttacking = false;
     int groundLayer;
+    int maxCombo;
+    int current_combo;
     
     public float maxDistanceThresh = 70;
     public float maxDistanceThreshOffset = 10f;
     public float topDownOffset = 10f;
 
+    public int GetMaxCombo() {
+        return maxCombo;
+    }
+
+    public void SetMaxCombo(int count) {
+        maxCombo = count;
+    }
+
+    public void IncrementCombo() {
+        current_combo++;
+    }
+
+    public int GetComboCount() {
+        return current_combo;
+    }
+
+
     public void SetPlayers(ClashEventModule attacker, ClashEventModule defender)
     {
         m_attacker = attacker;
         m_defender = defender;
+        current_combo = 0;
     }
 
     // Use this for initialization
@@ -34,18 +53,18 @@ public class ClashEvent : MonoBehaviour
         m_attackTargets = new List<Vector3>();
 
         //Compute Target points
-        Vector3 collisionDir = m_defender.transform.position - m_attacker.transform.position;
-        m_attackTargets.Add(m_defender.transform.position - collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position + Quaternion.Euler(0, -90, 0) * collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position + collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position - Quaternion.Euler(0, -90, 0) * collisionDir / 2);
+        // Vector3 collisionDir = m_defender.transform.position - m_attacker.transform.position;
+        // m_attackTargets.Add(m_defender.transform.position - collisionDir / 2);
+        // m_attackTargets.Add(m_defender.transform.position + Quaternion.Euler(0, -90, 0) * collisionDir / 2);
+        // m_attackTargets.Add(m_defender.transform.position + collisionDir / 2);
+        // m_attackTargets.Add(m_defender.transform.position - Quaternion.Euler(0, -90, 0) * collisionDir / 2);
 
         //Enable ClashEventModule
         m_attacker.enabled = true;
         m_defender.enabled = true;
-
     }
 
+    // up -> LEFT, down -> RIGHT, forward -> UP, back -> DOWN
     // Update is called once per frame
     void Update()
     {
@@ -53,23 +72,30 @@ public class ClashEvent : MonoBehaviour
         {
             Vector3 dir = (m_defender.transform.position - m_attacker.transform.position).normalized;
             Vector3 cross = Vector3.Cross(dir, m_attacker.transform.TransformDirection(Vector3.up));
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+
+            if (m_attacker.GetCommand() == 0)
             {
                 this.triggerAnimation(m_defender.transform.position, Vector3.up, dir, cross);
             }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                this.triggerAnimation(m_defender.transform.position, Vector3.down, dir, cross);
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                this.triggerAnimation(m_defender.transform.position, Vector3.back, dir, cross);
-            }
-
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            else if (m_attacker.GetCommand() == 1)
             {
                 this.triggerAnimation(m_defender.transform.position, Vector3.forward, dir, cross);
             }
+            else if (m_attacker.GetCommand() == 2)
+            {
+                this.triggerAnimation(m_defender.transform.position, Vector3.down, dir, cross);
+            }
+            else if (m_attacker.GetCommand() == 3)
+            {
+                this.triggerAnimation(m_defender.transform.position, Vector3.back, dir, cross);
+            }
+        }
+
+        if(current_combo == maxCombo) {
+            m_gameSystem.Initiate3D(
+                m_attacker.gameObject.GetComponent<Beyblade>(), 
+                m_defender.gameObject.GetComponent<Beyblade>());
+            this.enabled = false;
         }
     }
 
@@ -145,6 +171,9 @@ public class ClashEvent : MonoBehaviour
                 m_attacker.GetComponent<Rigidbody>().isKinematic = false;
                 m_attacker.GetComponent<Rigidbody>().useGravity = true;
             });
+
+            //Perform Damage Check
+            IncrementCombo();
         });
     }
 
@@ -186,7 +215,6 @@ public class ClashEvent : MonoBehaviour
             list.Add(getTopDownPos(end2));
         }
     }
-
 
     private Vector3 getTopDownPos(Vector3 orig) { 
         RaycastHit hit;
