@@ -13,6 +13,9 @@ public class GameSystem : MonoBehaviour {
 	//Delay Transition Modes
 	public float m_delayTransition;
 
+	// Cameras
+	public CamerasManager m_cam;
+
 	// Initiate 2D Mode
 	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount) {
 		if (!m_gameMode) {
@@ -59,6 +62,13 @@ public class GameSystem : MonoBehaviour {
 		attacker.GetComponent<ClashEventModule>().enabled = true;
 		defender.GetComponent<ClashEventModule>().enabled = true;
 
+		//Disable Pieces
+        attacker.DisableBeybladePieces();
+        defender.DisableBeybladePieces();
+
+        //Focused Camera
+        m_cam.FocusMyCam(attacker.gameObject);
+
 		yield return new WaitForSeconds(m_delayTransition / 2);
 		attacker.BounceBack(defender, a_velo - d_velo);
 		yield return new WaitForSeconds(m_delayTransition / 2);
@@ -74,16 +84,15 @@ public class GameSystem : MonoBehaviour {
 		defender.GetComponentInChildren<MovementControls>().enabled = true;
 		defender.GetComponentInChildren<TiltControls>().enabled = true;
 
-		//Disable Pieces
-        attacker.DisableBeybladePieces();
-        defender.DisableBeybladePieces();
-
         //Disable Controls
         attacker.DisablePlayerInfluence();
         defender.DisablePlayerInfluence();
 
 		//Designate Combo Count
 		m_cevent.SetMaxCombo(comboCount);
+
+		//Enable Shield
+		defender.GetComponent<ShieldController>().enabled = true;
 
 		//Start the event
 		m_cevent.enabled = true;
@@ -101,7 +110,14 @@ public class GameSystem : MonoBehaviour {
 		p2.GetComponentInChildren<TiltControls>().enabled = true;
 
 		//TODO: Hard Coded Value
-		p1.BounceBack(p2, bounceBack, 150);
+		p1.BounceBack(p2, bounceBack, 200);
+
+		//UnFocus Camera
+		m_cam.ResetCameras();
+
+		//Disable Shield
+		p1.GetComponent<ShieldController>().enabled = false;
+		p2.GetComponent<ShieldController>().enabled = false;
 
 		yield return new WaitForSeconds(m_delayTransition);
 
@@ -112,5 +128,9 @@ public class GameSystem : MonoBehaviour {
         //Enable Controls
         p1.EnablePlayerInfluence();
         p2.EnablePlayerInfluence();
+
+        //Reset Collision
+        p1.ResetCollision();
+        p2.ResetCollision();
 	}
 }

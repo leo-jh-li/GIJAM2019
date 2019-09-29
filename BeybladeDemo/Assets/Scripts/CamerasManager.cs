@@ -53,16 +53,29 @@ public class CamerasManager : MonoBehaviour {
 		}
 	}
 
-	// Buttons for testing
-	void Update() {
-		if (Input.GetKeyDown(KeyCode.Keypad0)) {
-			StartCoroutine(ResetToSplitScreen());
-		}
-		if (Input.GetKeyDown(KeyCode.Keypad1)) {
+	public void FocusMyCam(GameObject follower) {
+		if(m_leftPlayerCam.followTarget.gameObject == follower) {
 			StartCoroutine(FocusLeftCam());
 		}
-		if (Input.GetKeyDown(KeyCode.Keypad2)) {
+		else {
 			StartCoroutine(FocusRightCam());
 		}
+	}
+
+	public void ResetCameras() {
+		StartCoroutine(ResetToSplitScreen());
+	}
+
+	// Buttons for testing
+	void Update() {
+		// if (Input.GetKeyDown(KeyCode.Keypad0)) {
+		// 	StartCoroutine(ResetToSplitScreen());
+		// }
+		// if (Input.GetKeyDown(KeyCode.Keypad1)) {
+		// 	StartCoroutine(FocusLeftCam());
+		// }
+		// if (Input.GetKeyDown(KeyCode.Keypad2)) {
+		// 	StartCoroutine(FocusRightCam());
+		// }
 	}
 }

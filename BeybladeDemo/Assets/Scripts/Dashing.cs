@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dashing : MonoBehaviour {
+public class Dashing : MonoBehaviour, PlayerControls {
     public string keyName = "Jump";
     public float dashMultiplier = 5f;
     public float dashTime = 1f;
@@ -10,9 +10,22 @@ public class Dashing : MonoBehaviour {
     Beyblade b;
     Rigidbody rb;
     GroundCheck ground;
+    bool playerInfluence;
+
+    //Disable/Enable Player Controls without disabling physics
+    public void DisablePlayerInfluence()
+    {
+        playerInfluence = false;
+    }
+
+    public void EnablePlayerInfluence()
+    {
+        playerInfluence = true;
+    }
 
 	// Use this for initialization
 	void Start () {
+        playerInfluence = true;
         rb = GetComponent<Rigidbody>();
         ground = GetComponent<GroundCheck>();
         b = GetComponent<Beyblade>();
@@ -20,7 +33,7 @@ public class Dashing : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (ground.isGrounded && Input.GetAxis(keyName) != 0)
+        if (ground.isGrounded && Input.GetAxis(keyName) != 0 && playerInfluence)
         {
             StartCoroutine("Dash");
         }
