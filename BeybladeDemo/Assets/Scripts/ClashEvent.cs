@@ -4,72 +4,82 @@ using UnityEngine;
 
 public class ClashEvent : MonoBehaviour
 {
+    public GameSystem m_gameSystem;
+
     //Players
     public ClashEventModule m_attacker;
     public ClashEventModule m_defender;
-
-    //Attacker Target [L, R, U, D]
-    List<Vector3> m_attackTargets;
 
     public float attackDuration = 1f;
     public float attackAmplitude = 10f;
     bool isAttacking = false;
     int groundLayer;
+    int maxCombo;
+    int current_combo;
     
     public float maxDistanceThresh = 70;
     public float maxDistanceThreshOffset = 10f;
     public float topDownOffset = 10f;
 
+    public int GetMaxCombo() {
+        return maxCombo;
+    }
+
+    public void SetMaxCombo(int count) {
+        maxCombo = count;
+    }
+
+    public void IncrementCombo() {
+        current_combo++;
+    }
+
+    public int GetComboCount() {
+        return current_combo;
+    }
+
+
     public void SetPlayers(ClashEventModule attacker, ClashEventModule defender)
     {
         m_attacker = attacker;
         m_defender = defender;
+        current_combo = 0;
     }
 
     // Use this for initialization
     void Start()
     {
         groundLayer = LayerMask.GetMask("floor");
-        //Init
-        m_attackTargets = new List<Vector3>();
-
-        //Compute Target points
-        Vector3 collisionDir = m_defender.transform.position - m_attacker.transform.position;
-        m_attackTargets.Add(m_defender.transform.position - collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position + Quaternion.Euler(0, -90, 0) * collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position + collisionDir / 2);
-        m_attackTargets.Add(m_defender.transform.position - Quaternion.Euler(0, -90, 0) * collisionDir / 2);
-
-        //Enable ClashEventModule
-        m_attacker.enabled = true;
-        m_defender.enabled = true;
-
-        //Start the Coroutine
-        StartCoroutine(Turn());
     }
 
+    // up -> LEFT, down -> RIGHT, forward -> UP, back -> DOWN
     // Update is called once per frame
     void Update()
     {
         if (!isAttacking)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (m_attacker.GetCommand() == 0)
             {
                 this.triggerAnimation(m_defender.transform.position, Vector3.up);
             }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                this.triggerAnimation(m_defender.transform.position, Vector3.down);
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                this.triggerAnimation(m_defender.transform.position, Vector3.back);
-            }
-
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            else if (m_attacker.GetCommand() == 1)
             {
                 this.triggerAnimation(m_defender.transform.position, Vector3.forward);
             }
+            else if (m_attacker.GetCommand() == 2)
+            {
+                this.triggerAnimation(m_defender.transform.position, Vector3.down);
+            }
+            else if (m_attacker.GetCommand() == 3)
+            {
+                this.triggerAnimation(m_defender.transform.position, Vector3.back);
+            }
+        }
+
+        if(current_combo == maxCombo) {
+            m_gameSystem.Initiate3D(
+                m_attacker.gameObject.GetComponent<Beyblade>(), 
+                m_defender.gameObject.GetComponent<Beyblade>());
+            this.enabled = false;
         }
     }
 
@@ -143,6 +153,9 @@ public class ClashEvent : MonoBehaviour
                 m_attacker.GetComponent<Rigidbody>().isKinematic = false;
                 m_attacker.GetComponent<Rigidbody>().useGravity = true;
             });
+
+            //Perform Damage Check
+            IncrementCombo();
         });
     }
 
@@ -188,15 +201,6 @@ public class ClashEvent : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD:BeybladeDemo/Assets/Scripts/ClashEvent.cs
-    IEnumerator Turn() {
-        while(true) {
-            int attackerCommand = m_attacker.GetCommand();
-            int defenderCommand = m_defender.GetCommand();
-            yield return new WaitForSeconds(1f);    
-        }
-=======
-
     private Vector3 getTopDownPos(Vector3 orig) { 
         RaycastHit hit;
         if (Vector3.Distance(m_attacker.transform.position, Vector3.zero) > maxDistanceThresh) {
@@ -209,13 +213,5 @@ public class ClashEvent : MonoBehaviour
 
    
         return orig;
-    }
-    IEnumerator Turn()
-    {
-        int attackerCommand = m_attacker.GetCommand();
-        int defenderCommand = m_defender.GetCommand();
-
-        yield return new WaitForSeconds(1f);
->>>>>>> 6c9600b6996c0443d4c942f2b0c1615348e0f434:BeybladeDemo/Assets/Scenes/ClashEvent.cs
     }
 }

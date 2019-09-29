@@ -10,23 +10,13 @@ public class GameSystem : MonoBehaviour {
 	//EventSystems
 	public ClashEvent m_cevent;
 
+	//Delay Transition Modes
+	public float m_delayTransition;
+
 	// Initiate 2D Mode
-	public void Initiate2D(Beyblade attacker, Beyblade defender) {
+	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount) {
 		if (!m_gameMode) {
-			//Disable Controls
-			attacker.GetComponentInChildren<MovementControls>().enabled = false;
-			attacker.GetComponentInChildren<TiltControls>().enabled = false;
-
-			defender.GetComponentInChildren<MovementControls>().enabled = false;
-			defender.GetComponentInChildren<TiltControls>().enabled = false;
-
-			//Set Velocity to 0
-			attacker.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
-			defender.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
-
-			//Start the event
-			m_cevent.SetPlayers(attacker.GetComponent<ClashEventModule>(), defender.GetComponent<ClashEventModule>());
-			m_cevent.enabled = true;
+			StartCoroutine(FreezeFrame2D(attacker, defender, comboCount));
 			m_gameMode = !m_gameMode;
 		}
 	}
@@ -34,11 +24,7 @@ public class GameSystem : MonoBehaviour {
 	public void Initiate3D(Beyblade p1, Beyblade p2) {
 		if(m_gameMode) {
 			//Enable Controls
-			p1.GetComponentInChildren<MovementControls>().enabled = true;
-			p1.GetComponentInChildren<TiltControls>().enabled = true;
-
-			p2.GetComponentInChildren<MovementControls>().enabled = true;
-			p2.GetComponentInChildren<TiltControls>().enabled = true;
+			StartCoroutine(FreezeFrame3D(p1, p2));
 			m_gameMode = !m_gameMode;
 		}
 	}
@@ -51,5 +37,68 @@ public class GameSystem : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	IEnumerator FreezeFrame2D(Beyblade attacker, Beyblade defender, int comboCount) {
+		//Freeze physics
+		attacker.GetComponentInChildren<MovementControls>().enabled = false;
+		attacker.GetComponentInChildren<TiltControls>().enabled = false;
+
+		defender.GetComponentInChildren<MovementControls>().enabled = false;
+		defender.GetComponentInChildren<TiltControls>().enabled = false;
+
+		//Set Velocity to 0
+		attacker.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
+		defender.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
+
+		//Initialize
+		m_cevent.SetPlayers(attacker.GetComponent<ClashEventModule>(), defender.GetComponent<ClashEventModule>());
+		attacker.GetComponent<ClashEventModule>().enabled = true;
+		defender.GetComponent<ClashEventModule>().enabled = true;
+
+		yield return new WaitForSeconds(m_delayTransition);
+
+		//Unfreeze physics
+		attacker.GetComponentInChildren<MovementControls>().enabled = true;
+		attacker.GetComponentInChildren<TiltControls>().enabled = true;
+
+		defender.GetComponentInChildren<MovementControls>().enabled = true;
+		defender.GetComponentInChildren<TiltControls>().enabled = true;
+
+		//Disable Pieces
+        attacker.DisableBeybladePieces();
+        defender.DisableBeybladePieces();
+
+        //Disable Controls
+        attacker.DisablePlayerInfluence();
+        defender.DisablePlayerInfluence();
+
+		//Designate Combo Count
+		m_cevent.SetMaxCombo(comboCount);
+
+		//Start the event
+		m_cevent.enabled = true;
+	}
+
+	IEnumerator FreezeFrame3D(Beyblade p1, Beyblade p2) {
+		p1.GetComponent<ClashEventModule>().enabled = false;
+		p2.GetComponent<ClashEventModule>().enabled = false;
+
+		//Unfreeze physics
+		p1.GetComponentInChildren<MovementControls>().enabled = true;
+		p1.GetComponentInChildren<TiltControls>().enabled = true;
+
+		p2.GetComponentInChildren<MovementControls>().enabled = true;
+		p2.GetComponentInChildren<TiltControls>().enabled = true;
+
+		yield return new WaitForSeconds(m_delayTransition);
+
+		//Enable Pieces
+        p1.EnableBeybladePieces();
+        p2.EnableBeybladePieces();
+
+        //Enable Controls
+        p1.EnablePlayerInfluence();
+        p2.EnablePlayerInfluence();
 	}
 }
