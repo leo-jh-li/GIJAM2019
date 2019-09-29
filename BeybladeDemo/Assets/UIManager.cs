@@ -15,10 +15,12 @@ public class UIManager : MonoBehaviour {
 	public CanvasGroup comboCanvas;
 
 	public ClashEvent clashEvent;
+	public UltimateSkills ultimate;
 
 	void Awake() {
 		player.setHealthUICallback(UpdateHealth);
 		clashEvent.setComboCallback(UpdateComboText);
+		ultimate.setUltimateCallback(UpdateUltimate);
 	}
 
 	void Start() {
@@ -34,6 +36,10 @@ public class UIManager : MonoBehaviour {
 
 	void UpdateHealth(float health) {
 		this.healthSlider.value = health / player.m_maxStamina;
+	}
+
+	void UpdateUltimate(float val) {
+		this.ultimateSlider.value = val / 100f; 
 	}
 
 	void UpdateComboText(int combo) {

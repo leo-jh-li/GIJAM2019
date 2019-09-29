@@ -31,6 +31,8 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	// To Compute Damage
 	MovementControls m_mc;
+	//Ultimate
+	UltimateSkills m_us;
 
 	private System.Action<float> uiHealthCallback;
 	public int playerIndex = 0;
@@ -39,6 +41,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	public float deathAnimTime = 3f;
 
 	public Transform BeyVisuals;
+	public UltimateSkillUI ultiSkillUi;
 
 	float ComputeCollisionResult(BeybladePiece thisPiece, BeybladePiece otherPiece) {
 		Beyblade otherBey = otherPiece.m_parent;
@@ -115,6 +118,8 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 		if (m_stamina <= 0) {
 			this.Die();
 		}
+
+		m_us.ChargeUltimateBar(dmg/2);
 	}
 
 	public void Die() {
@@ -145,7 +150,9 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 		float result = ComputeCollisionResult(thisPiece, otherPiece);
 		print(result + gameObject.name);
 		if(ClashEventDecision(otherPiece.m_parent, result) && !m_collision) {
+			//deal damage
 			otherPiece.m_parent.TakeDamage(4 * result);
+			m_us.ChargeUltimateBar(result/4);
 			print(thisPiece.gameObject.name + " " + gameObject.name + " -> " + otherPiece.gameObject.name + " " + otherPiece.m_parent.name);
 			//TODO: Determine combo count
 			m_gameSystem.Initiate2D(this, otherPiece.m_parent, 10);
@@ -154,9 +161,17 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 			DisablePlayerInfluence();
 			Invoke("EnablePlayerInfluence", m_bounceDisableTime);
 			BounceBack(otherPiece.m_parent, result);
+			//deal damage
 			otherPiece.m_parent.TakeDamage(result);
+			m_us.ChargeUltimateBar(result/4);
 		}
 		m_collision = true;
+	}
+
+	public void UltimateBeybladeCollision(UltimateCollider thisPiece, BeybladePiece otherPiece) {
+		thisPiece.gameObject.SetActive(false);
+		this.ultiSkillUi.doUltimate();
+		m_gameSystem.Initiate2D(this, otherPiece.m_parent, 40, 0.2f);
 	}
 
 	public void ResetCollision() {
@@ -173,6 +188,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	void Start() {
 		m_mc = GetComponent<MovementControls>();
+		m_us = GetComponent<UltimateSkills>();
 		// m_stamina = m_maxStamina;
 		this.TakeDamage(0);
 		m_collision = false;
@@ -180,9 +196,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.Q)) {
-			this.TakeDamage(1023);
-		}
+
 	}
 
 }
