@@ -23,6 +23,8 @@ public class ClashEvent : MonoBehaviour
     public float topDownOffset = 10f;
     private System.Action<int> comboCallback;
 
+    public GameObject damageTextPrefab;
+
     public int GetMaxCombo() {
         return maxCombo;
     }
@@ -177,6 +179,11 @@ public class ClashEvent : MonoBehaviour
             this.nextTween(end, relativeDirection, list, dir, duration);
             this.tweenEnemyKnockback(relativeDirection, dir, cross);
         });
+    }
+
+    private void createText(bool isAttacker) {
+
+        // Instantiate the text.
     }
 
     LTDescr nextTween(Vector3 end, Vector3 relativeDirection, List<Vector3> list, Vector3 dir, float duration) {
