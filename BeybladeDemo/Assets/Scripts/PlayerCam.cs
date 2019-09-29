@@ -98,8 +98,8 @@ public class PlayerCam : MonoBehaviour {
 		camMode = CameraMode.TRANSITIONING;
 		float timeElapsed = 0;
 		while (timeElapsed < m_transitionTime + m_transitionFreezeTime) {
-			FreeCam(Time.deltaTime, m_transitionMoveSpeed);
 			timeElapsed += Time.fixedDeltaTime;
+			FreeCam(Time.deltaTime, m_transitionMoveSpeed);
 			yield return new WaitForEndOfFrame();
 		}
 		camMode = CameraMode.FREE;
