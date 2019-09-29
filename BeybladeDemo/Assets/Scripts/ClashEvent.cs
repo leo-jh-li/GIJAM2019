@@ -21,6 +21,8 @@ public class ClashEvent : MonoBehaviour
     public float maxDistanceThresh = 70;
     public float maxDistanceThreshOffset = 10f;
     public float topDownOffset = 10f;
+    private System.Action<int> comboCallback;
+
 
     public int GetMaxCombo() {
         return maxCombo;
@@ -28,10 +30,16 @@ public class ClashEvent : MonoBehaviour
 
     public void SetMaxCombo(int count) {
         maxCombo = count;
+        if (comboCallback != null) {
+            comboCallback.Invoke(maxCombo);
+        }
     }
 
     public void IncrementCombo() {
         current_combo++;
+        if (comboCallback != null) {
+            comboCallback.Invoke(maxCombo);
+        }
     }
 
     public int GetComboCount() {
@@ -53,6 +61,10 @@ public class ClashEvent : MonoBehaviour
         m_attacker = attacker;
         m_defender = defender;
         current_combo = 0;
+    }
+
+    public void setComboCallback(System.Action<int> callback) {
+        this.comboCallback = callback;
     }
 
     // Use this for initialization
@@ -79,6 +91,9 @@ public class ClashEvent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Hello");
+
+
         if (!isAttacking)
         {
             Vector3 dir = (m_defender.transform.position - m_attacker.transform.position).normalized;
@@ -104,6 +119,8 @@ public class ClashEvent : MonoBehaviour
 
             m_attacker.ResetCommand();
         }
+
+
 
         if(current_combo >= maxCombo) {
             m_gameSystem.Initiate3D(
@@ -165,6 +182,7 @@ public class ClashEvent : MonoBehaviour
             Debug.Log("Did not hit shield");
             IncrementCombo();
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
+            this.GetComponent<GameUITextMaker>().createText(m_defender.transform.position, m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);
             this.tweenEnemyKnockback(relativeDirection, dir, cross);
         });
