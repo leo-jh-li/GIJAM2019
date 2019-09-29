@@ -19,6 +19,10 @@ public class GameSystem : MonoBehaviour {
 	public Canvas player1Canvas;
 	public Canvas player2Canvas;
 
+	public void OnDestroy() {
+		StopAllCoroutines();
+	}
+
 	// Initiate 2D Mode
 	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount) {
 		if (!m_gameMode) {
@@ -48,6 +52,11 @@ public class GameSystem : MonoBehaviour {
 	}
 
 	IEnumerator FreezeFrame2D(Beyblade attacker, Beyblade defender, int comboCount) {
+
+		if (!attacker || !defender) {
+			yield break;
+		}
+
 		//Freeze physics
 		attacker.GetComponentInChildren<MovementControls>().enabled = false;
 		attacker.GetComponentInChildren<TiltControls>().enabled = false;
@@ -75,9 +84,10 @@ public class GameSystem : MonoBehaviour {
         m_cam.FocusMyCam(attacker.gameObject);
 
 		yield return new WaitForSeconds(m_delayTransition / 2);
+
 		attacker.BounceBack(defender, a_velo - d_velo);
 		yield return new WaitForSeconds(m_delayTransition / 2);
-
+		
 		//Set Velocity to 0
 		attacker.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
 		defender.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
