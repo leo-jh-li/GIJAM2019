@@ -34,7 +34,7 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 	void Start() {
 		playerInfluence = true;
 		player = GetComponent<Beyblade>();
-		m_ultimateCollider = GetComponentInChildren<UltimateCollider>();
+		//m_ultimateCollider = GetComponentInChildren<UltimateCollider>();
 	}
 
 	void Update() {
@@ -46,6 +46,7 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 
 	IEnumerator ActivateUltimate() {
 		player.m_gameSystem.FreezeGameState();
+		player.m_gameSystem.NoLight();
 		yield return new WaitForSeconds(m_animationTime);
 
 		Beyblade otherPlayer = player.m_gameSystem.p1 == player ? player.m_gameSystem.p2 : player.m_gameSystem.p1;

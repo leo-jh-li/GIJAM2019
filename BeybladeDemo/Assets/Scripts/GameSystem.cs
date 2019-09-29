@@ -132,6 +132,8 @@ public class GameSystem : MonoBehaviour {
 	}
 
 	IEnumerator FreezeFrame3D(Beyblade p1, Beyblade p2, Vector3 bounceBack) {
+		ResetLight();
+
 		p1.GetComponent<ClashEventModule>().enabled = false;
 		p2.GetComponent<ClashEventModule>().enabled = false;
 
