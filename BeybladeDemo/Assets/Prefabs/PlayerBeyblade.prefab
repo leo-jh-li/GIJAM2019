@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 114555841905219848}
   - component: {fileID: 114400943411158632}
   - component: {fileID: 114925004212652058}
+  - component: {fileID: 135209337063569614}
+  - component: {fileID: 114663326110984062}
   m_Layer: 0
   m_Name: PlayerBeyblade
   m_TagString: Untagged
@@ -492,6 +494,26 @@ MonoBehaviour:
   m_ceventDamageThreshold: 5
   m_ceventVelocityThreshold: 40
   m_bounceDisableTime: 0.5
+--- !u!114 &114663326110984062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355358247712746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36ec6a67601deb4bba1d7eea2010d3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defenseMultiplier: 1
+  assignedKey: Fire3
+  maxShieldTime: 2
+  shieldInitSize: 5
+  shieldMinSize: 3
+  baseDefense: 1
+  highDefense: 4
+  overshieldPenalty: 0.3
+  overshieldPenaltyTime: 3
 --- !u!114 &114664943335482418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -540,6 +562,18 @@ MonoBehaviour:
   down: s
   left: a
   right: d
+--- !u!135 &135209337063569614
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355358247712746}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!136 &136043547781959914
 CapsuleCollider:
   m_ObjectHideFlags: 1
