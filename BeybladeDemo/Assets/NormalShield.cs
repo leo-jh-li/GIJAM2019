@@ -15,6 +15,7 @@ public class NormalShield : MonoBehaviour {
     public float overshieldPenaltyTime = 3f;
 
     SphereCollider shield;
+	Beyblade b;
     float shieldTimer;
     float shieldRadiusDelta;
 
@@ -25,6 +26,7 @@ public class NormalShield : MonoBehaviour {
         shieldTimer = maxShieldTime;
         shieldRadiusDelta = (shieldInitSize - shieldMinSize) / maxShieldTime;
         shield = GetComponent<SphereCollider>();
+		b = GetComponent<Beyblade>();
         shield.radius = shieldInitSize;
 	}
 	
@@ -34,19 +36,26 @@ public class NormalShield : MonoBehaviour {
         {
             if (Input.GetAxis(assignedKey) != 0)
             {
-                shield.enabled = true;
+				if (!shield.enabled){
+					b.DisablePlayerInfluence();
+				    shield.enabled = true;
+				}
                 shieldTimer -= Time.deltaTime;
                 shield.radius -= shieldRadiusDelta * Time.deltaTime;
                 defenseMultiplier = highDefense;
                 if (shieldTimer <= 0)
                 {
                     defenseMultiplier = overshieldPenalty;
+					shield.enabled = false;
                     StartCoroutine("BreakShield");
                 }
             }
             else
             {
-                shield.enabled = false;
+				if (shield.enabled){
+					b.EnablePlayerInfluence();
+					shield.enabled = false;
+				}
                 if (shieldTimer < maxShieldTime)
                     shieldTimer += Mathf.Min(Time.deltaTime, maxShieldTime - shieldTimer);
                 if (shield.radius < shieldInitSize)
@@ -64,5 +73,6 @@ public class NormalShield : MonoBehaviour {
         ready = false;
         yield return new WaitForSeconds(overshieldPenaltyTime);
         ready = true;
+		b.EnablePlayerInfluence();
     }
 }

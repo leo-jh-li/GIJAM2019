@@ -188,15 +188,6 @@ public class ClashEvent : MonoBehaviour
         }
     }
 
-<<<<<<< HEAD:BeybladeDemo/Assets/Scripts/ClashEvent.cs
-    IEnumerator Turn() {
-        while(true) {
-            int attackerCommand = m_attacker.GetCommand();
-            int defenderCommand = m_defender.GetCommand();
-            yield return new WaitForSeconds(1f);    
-        }
-=======
-
     private Vector3 getTopDownPos(Vector3 orig) { 
         RaycastHit hit;
         if (Vector3.Distance(m_attacker.transform.position, Vector3.zero) > maxDistanceThresh) {
@@ -210,12 +201,12 @@ public class ClashEvent : MonoBehaviour
    
         return orig;
     }
-    IEnumerator Turn()
-    {
-        int attackerCommand = m_attacker.GetCommand();
-        int defenderCommand = m_defender.GetCommand();
-
-        yield return new WaitForSeconds(1f);
->>>>>>> 6c9600b6996c0443d4c942f2b0c1615348e0f434:BeybladeDemo/Assets/Scenes/ClashEvent.cs
-    }
+	
+    IEnumerator Turn() {
+        while(true) {
+            int attackerCommand = m_attacker.GetCommand();
+            int defenderCommand = m_defender.GetCommand();
+            yield return new WaitForSeconds(1f);    
+        }
+	}
 }
