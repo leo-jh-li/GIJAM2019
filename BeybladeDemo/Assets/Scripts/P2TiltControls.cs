@@ -9,7 +9,6 @@ public class P2TiltControls : MonoBehaviour {
 	public float m_smooth = 5f;
 
   public Transform center;
-  public Transform sphere;
 
   int layerMask;
 
@@ -49,7 +48,6 @@ public class P2TiltControls : MonoBehaviour {
     Vector3 downDirection = center.transform.TransformDirection(Vector3.down);
     Debug.DrawLine(center.transform.position, downDirection);
     if (Physics.Raycast(center.transform.position, downDirection, out hit, 999999f, layerMask)) {
-      sphere.transform.position = hit.point;
       Quaternion baseRotation = Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0);
       Quaternion targetRotation = Quaternion.Euler(x_tilt, 0, z_tilt) * baseRotation;
       transform.rotation = Quaternion.Slerp(

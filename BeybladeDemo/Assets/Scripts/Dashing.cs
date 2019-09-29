@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Dashing : MonoBehaviour {
-
-    public MonoBehaviour[] movementScripts;
     public string keyName = "Jump";
     public float dashMultiplier = 5f;
     public float dashTime = 1f;
 
+    Beyblade b;
     Rigidbody rb;
     GroundCheck ground;
 
@@ -16,6 +15,7 @@ public class Dashing : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody>();
         ground = GetComponent<GroundCheck>();
+        b = GetComponent<Beyblade>();
 	}
 	
 	// Update is called once per frame
@@ -30,13 +30,8 @@ public class Dashing : MonoBehaviour {
     {
         // Start of Dash
         rb.velocity = rb.velocity * dashMultiplier;
-        foreach (MonoBehaviour s in movementScripts)
-            s.enabled = false;
-        this.enabled = false;
+        b.DisablePlayerInfluence();
         yield return new WaitForSeconds(dashTime);
-        // End of Dash
-        foreach (MonoBehaviour s in movementScripts)
-            s.enabled = true;
-        this.enabled = true;
+        b.EnablePlayerInfluence();
     }
 }

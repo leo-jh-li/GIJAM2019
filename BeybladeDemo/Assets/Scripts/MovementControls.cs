@@ -2,25 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementControls : MonoBehaviour {
+public class MovementControls : MonoBehaviour, PlayerControls {
 
 	public float m_maxSpeed = 5f;
 	public float m_smooth = 5f;
 
 	private Rigidbody rb;
+
+    public string up, down, left, right;
+
     GroundCheck ground;
+    bool playerInfluence;
+
+    //Disable/Enable Player Controls without disabling physics
+    public void DisablePlayerInfluence()
+    {
+    	playerInfluence = false;
+    }
+
+	public void EnablePlayerInfluence()
+	{
+		playerInfluence = true;
+	}
 
 	// Use this for initialization
 	void Start () {
+		playerInfluence = true;
 		rb = GetComponentInChildren<Rigidbody>();
         ground = GetComponentInChildren<GroundCheck>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 vel = new Vector3((Input.GetKey("d")? 1:0) - (Input.GetKey("a")? 1:0),
+        Vector3 vel = new Vector3((Input.GetKey(right) && playerInfluence ? 1:0) - (Input.GetKey(left) && playerInfluence ? 1:0),
             0,
-            (Input.GetKey("w") ? 1 : 0) - (Input.GetKey("s") ? 1 : 0)).normalized * m_maxSpeed;
+            (Input.GetKey(up) && playerInfluence ? 1 : 0) - (Input.GetKey(down) && playerInfluence ? 1 : 0)).normalized * m_maxSpeed;
 
         vel = Vector3.ProjectOnPlane(vel, ground.groundNormal);
         //print(vel.ToString());

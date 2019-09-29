@@ -20,4 +20,11 @@ public class BeybladePiece : MonoBehaviour {
 			CollideWithPiece(piece);
 		}
 	}
+
+	void OnTriggerExit(Collider other) {
+		BeybladePiece piece = other.GetComponent<BeybladePiece>();
+		if(piece) {
+			m_parent.ResetCollision();
+		}	
+	}
 }

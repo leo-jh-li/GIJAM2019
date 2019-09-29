@@ -39,6 +39,13 @@ public class ClashEvent : MonoBehaviour
         m_attackTargets.Add(m_defender.transform.position + Quaternion.Euler(0, -90, 0) * collisionDir / 2);
         m_attackTargets.Add(m_defender.transform.position + collisionDir / 2);
         m_attackTargets.Add(m_defender.transform.position - Quaternion.Euler(0, -90, 0) * collisionDir / 2);
+
+        //Enable ClashEventModule
+        m_attacker.enabled = true;
+        m_defender.enabled = true;
+
+        //Start the Coroutine
+        StartCoroutine(Turn());
     }
 
     // Update is called once per frame
@@ -181,6 +188,14 @@ public class ClashEvent : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD:BeybladeDemo/Assets/Scripts/ClashEvent.cs
+    IEnumerator Turn() {
+        while(true) {
+            int attackerCommand = m_attacker.GetCommand();
+            int defenderCommand = m_defender.GetCommand();
+            yield return new WaitForSeconds(1f);    
+        }
+=======
 
     private Vector3 getTopDownPos(Vector3 orig) { 
         RaycastHit hit;
@@ -201,5 +216,6 @@ public class ClashEvent : MonoBehaviour
         int defenderCommand = m_defender.GetCommand();
 
         yield return new WaitForSeconds(1f);
+>>>>>>> 6c9600b6996c0443d4c942f2b0c1615348e0f434:BeybladeDemo/Assets/Scenes/ClashEvent.cs
     }
 }
