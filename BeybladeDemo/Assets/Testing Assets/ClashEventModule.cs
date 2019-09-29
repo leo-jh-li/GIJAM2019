@@ -6,6 +6,7 @@ public class ClashEventModule : MonoBehaviour, PlayerControls {
 	
 	//Input
 	public string up, down, left, right;
+	public string horizontal, vertical;
 	public float m_comboDamage;
 	public float m_comboDefense;
 
@@ -39,16 +40,16 @@ public class ClashEventModule : MonoBehaviour, PlayerControls {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey(left)) {
+		if (Input.GetKey(left) || Input.GetAxis(vertical) > 0) {
 			command = 0;
 		}
-		else if(Input.GetKey(up)) {
+		else if(Input.GetKey(up) || Input.GetAxis(horizontal) > 0) {
 			command = 1;
 		}
-		else if(Input.GetKey(right)) {
+		else if(Input.GetKey(right) || Input.GetAxis(vertical) < 0) {
 			command = 2;
 		}
-		else if(Input.GetKey(down)) {
+		else if(Input.GetKey(down) || Input.GetAxis(horizontal) < 0) {
 			command = 3;
 		}
 	}
