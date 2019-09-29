@@ -3292,8 +3292,8 @@ MonoBehaviour:
   m_defender: {fileID: 1784784846}
   attackDuration: 0.25
   attackAmplitude: 25
-  maxDistanceThresh: 50
-  maxDistanceThreshOffset: 20
+  maxDistanceThresh: 70
+  maxDistanceThreshOffset: 10
   topDownOffset: 1
 --- !u!4 &1929277907
 Transform:
