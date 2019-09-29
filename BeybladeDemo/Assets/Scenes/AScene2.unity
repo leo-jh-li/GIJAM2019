@@ -1130,7 +1130,10 @@ MonoBehaviour:
   m_maxTilt: 30
   m_smooth: 5
   center: {fileID: 982404157}
-  sphere: {fileID: 94296438}
+  up: i
+  down: k
+  left: j
+  right: l
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,7 +1605,10 @@ MonoBehaviour:
   m_maxTilt: 30
   m_smooth: 5
   center: {fileID: 1082634179}
-  sphere: {fileID: 94296438}
+  up: 
+  down: 
+  left: 
+  right: 
 --- !u!1 &849053720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,9 +2149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5453bdac94d43c6b15df4d7e3d195a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementScripts: []
+  m_gameSystem: {fileID: 0}
   m_maxStamina: 100
   m_defenseMultiplier: 2
   m_attackMultiplier: 2
+  m_ceventDamageThreshold: 1
+  m_ceventVelocityThreshold: 1
+  m_bounceDisableTime: 1
 --- !u!114 &1193652970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2159,6 +2170,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxSpeed: 30
   m_smooth: 5
+  up: w
+  down: s
+  left: a
+  right: d
 --- !u!54 &1193652971
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2223,6 +2238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4a91574ecbe424793709a4dba69b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  up: w
+  down: s
+  left: a
+  right: d
 --- !u!114 &1193652976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2996,9 +3015,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f5453bdac94d43c6b15df4d7e3d195a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementScripts: []
+  m_gameSystem: {fileID: 0}
   m_maxStamina: 100
   m_defenseMultiplier: 2
   m_attackMultiplier: 2
+  m_ceventDamageThreshold: 1
+  m_ceventVelocityThreshold: 1
+  m_bounceDisableTime: 1
 --- !u!65 &1784784841
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3067,6 +3091,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxSpeed: 30
   m_smooth: 5
+  up: 
+  down: 
+  left: 
+  right: 
 --- !u!114 &1784784846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3078,6 +3106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4a91574ecbe424793709a4dba69b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  up: w
+  down: s
+  left: a
+  right: d
 --- !u!1 &1836301236
 GameObject:
   m_ObjectHideFlags: 0
