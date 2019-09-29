@@ -38,7 +38,7 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 	}
 
 	void Update() {
-		if(Input.GetKey(fire) && playerInfluence && m_currentUlt == 100) {
+		if(Input.GetButtonDown(fire) && playerInfluence && m_currentUlt == 100) {
 			UseUltimate();
 			m_currentUlt = 0;
 		}

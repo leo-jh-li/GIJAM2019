@@ -302,6 +302,7 @@ GameObject:
   - component: {fileID: 95310457243123160}
   - component: {fileID: 114216872644876710}
   - component: {fileID: 82408587679920968}
+  - component: {fileID: 114477098419685756}
   m_Layer: 0
   m_Name: PlayerBeyblade
   m_TagString: Untagged
@@ -477,6 +478,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1623663956741370
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4674817662462280}
+  - component: {fileID: 65458495381170464}
+  - component: {fileID: 114562927054841942}
+  m_Layer: 0
+  m_Name: UltimateCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1651071123235740
 GameObject:
   m_ObjectHideFlags: 1
@@ -901,6 +919,7 @@ Transform:
   - {fileID: 4207686612011906}
   - {fileID: 4677527708461288}
   - {fileID: 4216949942254296}
+  - {fileID: 4674817662462280}
   m_Father: {fileID: 4788471726660862}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1146,6 +1165,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4368225535907498}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4674817662462280
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623663956741370}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4331939152022212}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4677527708461288
 Transform:
@@ -1594,6 +1626,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65458495381170464
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623663956741370}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 3, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &82408587679920968
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1915,6 +1959,21 @@ MonoBehaviour:
   m_defense: 0
   m_collider: {fileID: 64257225236543794}
   m_parent: {fileID: 114555841905219848}
+--- !u!114 &114477098419685756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355358247712746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92fce8c41ca8a4bc393107fd47533f9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentUlt: 0
+  fire: P1_X
+  m_animationTime: 2
+  m_ultimateCollider: {fileID: 114562927054841942}
 --- !u!114 &114555841905219848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1930,6 +1989,7 @@ MonoBehaviour:
   - {fileID: 114400943411158632}
   - {fileID: 114910544940668580}
   - {fileID: 114326626173356828}
+  - {fileID: 114477098419685756}
   m_beybladePieces:
   - {fileID: 1651071123235740}
   - {fileID: 1494163280079970}
@@ -1948,6 +2008,18 @@ MonoBehaviour:
   playerExplosion: {fileID: 198844489192572694}
   deathAnimTime: 3
   BeyVisuals: {fileID: 4331939152022212}
+--- !u!114 &114562927054841942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1623663956741370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6d3d569ab774b8aa5c61b2206b3379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 114555841905219848}
 --- !u!114 &114664943335482418
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -781,6 +781,11 @@ Prefab:
       propertyPath: vertical
       value: P2_Vertical
       objectReference: {fileID: 0}
+    - target: {fileID: 114477098419685756, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: fire
+      value: P2_X
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
   m_IsPrefabAsset: 0
@@ -1567,7 +1572,7 @@ MonoBehaviour:
   m_gameSystem: {fileID: 1929277908}
   m_attacker: {fileID: 0}
   m_defender: {fileID: 0}
-  attackDuration: 0.5
+  DefaultAttackDuration: 0.5
   attackAmplitude: 25
   maxDistanceThresh: 50
   maxDistanceThreshOffset: 20
@@ -1600,7 +1605,10 @@ MonoBehaviour:
   m_gameMode: 0
   m_cevent: {fileID: 1929277906}
   m_delayTransition: 2
+  p1: {fileID: 841436673}
+  p2: {fileID: 512292734}
   m_cam: {fileID: 1145076364}
+  m_dirLight: {fileID: 170076734}
   player1Canvas: {fileID: 2065446790}
   player2Canvas: {fileID: 2065286617}
 --- !u!4 &2048178766 stripped
