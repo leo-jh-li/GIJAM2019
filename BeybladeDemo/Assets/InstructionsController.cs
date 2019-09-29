@@ -15,6 +15,17 @@ public class InstructionsController : MonoBehaviour {
     this.checkLimits();
   }
 
+  void Update() {
+		// TODO: change buttons!
+		if (Input.GetKeyDown(KeyCode.A)) {
+      this.PageForward();
+		} else if (Input.GetKeyDown(KeyCode.S)) {
+      this.PageBackwards();
+		} else if (Input.GetKeyDown(KeyCode.D)) {
+      SceneManager.LoadScene("MainMenu");
+    }
+  }
+
   public void PageForward() {
     this.slides[curSlide].gameObject.SetActive(false);
     curSlide = Mathf.Clamp(curSlide + 1, 0, slides.Count-1);

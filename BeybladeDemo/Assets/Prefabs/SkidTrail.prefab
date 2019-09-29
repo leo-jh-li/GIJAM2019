@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - component: {fileID: 400000}
   - component: {fileID: 9600000}
-  - component: {fileID: 11400000}
   m_Layer: 0
   m_Name: SkidTrail
   m_TagString: Untagged
@@ -131,18 +130,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.3
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90587d1684bf3ef4fa134d5404198c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PersistTime: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
