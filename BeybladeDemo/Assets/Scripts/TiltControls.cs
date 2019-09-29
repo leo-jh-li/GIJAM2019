@@ -58,6 +58,11 @@ public class TiltControls : MonoBehaviour, PlayerControls {
 		Debug.DrawLine(center.transform.position, downDirection);
 		if (Physics.Raycast(center.transform.position, downDirection, out hit, 999999f, layerMask)) {
 			Quaternion baseRotation = Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0);
+			// float yEuler = 0;
+			// if (transform.parent.GetComponent<MovementControls>().controlMode == ControlMode.PERSPECTIVE) {
+				// yEuler = Quaternion.LookRotation(transform.forward).eulerAngles.y;
+				// targetRotation *= Quaternion.LookRotation(transform.forward);
+			// }
 			Quaternion targetRotation = Quaternion.Euler(x_tilt, 0, z_tilt) * baseRotation;
 			transform.rotation = Quaternion.Slerp(
 			transform.rotation,

@@ -2,7 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ControlMode {
+	PERSPECTIVE,
+	WORLD
+}
+
 public class MovementControls : MonoBehaviour, PlayerControls {
+
+	public Transform cameraRig;
+	public ControlMode controlMode;
 
 	public float m_maxSpeed = 5f;
 	public float m_smooth = 5f;
@@ -34,11 +42,31 @@ public class MovementControls : MonoBehaviour, PlayerControls {
 	
 	// Update is called once per frame
 	void Update () {
-        Vector3 vel = new Vector3((Input.GetKey(right) && playerInfluence ? 1:0) - (Input.GetKey(left) && playerInfluence ? 1:0),
-            0,
-            (Input.GetKey(up) && playerInfluence ? 1 : 0) - (Input.GetKey(down) && playerInfluence ? 1 : 0)).normalized * m_maxSpeed;
-
+		Vector3 vel = Vector3.zero;
+		if (playerInfluence) {
+			if (controlMode == ControlMode.PERSPECTIVE) {
+				if (Input.GetKey(up)) {
+					vel += transform.forward;
+				}
+				if (Input.GetKey(down)) {
+					vel -= transform.forward;
+				}
+				if (Input.GetKey(right)) {
+					vel += transform.right;
+				}
+				if (Input.GetKey(left)) {
+					vel -= transform.right;
+				}
+			} else if (controlMode == ControlMode.WORLD) {
+				vel = new Vector3((Input.GetKey(right) ? 1:0) - (Input.GetKey(left) ? 1:0),
+					0,
+					(Input.GetKey(up) ? 1 : 0) - (Input.GetKey(down) ? 1 : 0));
+			}
+		}
+		vel = vel.normalized * m_maxSpeed;
         vel = Vector3.ProjectOnPlane(vel, ground.groundNormal);
+		transform.forward = Vector3.ProjectOnPlane(cameraRig.transform.forward, ground.groundNormal);
+		Debug.DrawLine(transform.position, transform.position + transform.forward * 50, Color.red);
         //print(vel.ToString());
 		// Work on Forward / Backwards Tilt
 
@@ -49,4 +77,8 @@ public class MovementControls : MonoBehaviour, PlayerControls {
 
 		//print(rb.velocity);
 	}
+
+	// void LateUpdate() {
+	// 	transform.forward = cameraRig.transform.forward;
+	// }
 }
