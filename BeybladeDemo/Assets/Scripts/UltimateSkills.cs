@@ -12,6 +12,8 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 
 	bool playerInfluence;
 
+	private System.Action<float> callback;
+
     //Disable/Enable Player Controls without disabling physics
     public void DisablePlayerInfluence()
     {
@@ -25,6 +27,9 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 
 	public void ChargeUltimateBar(float value) {
 		m_currentUlt = m_currentUlt + value >= 100 ? 100 : m_currentUlt + value;
+		if (this.callback != null) {
+			this.callback.Invoke(m_currentUlt);
+		}
 	}
 
 	public void UseUltimate() {
@@ -34,6 +39,7 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 	void Start() {
 		playerInfluence = true;
 		player = GetComponent<Beyblade>();
+		this.ChargeUltimateBar(0);
 		//m_ultimateCollider = GetComponentInChildren<UltimateCollider>();
 	}
 
@@ -57,5 +63,9 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 
 		//Let collision handle the rest
 		LeanTween.move( gameObject, otherPlayer.gameObject.transform, 0.5f).setEase( LeanTweenType.easeInQuad ).setDelay(1f);
+	}
+
+	public void setUltimateCallback(System.Action<float> callback) {
+		this.callback = callback;
 	}
 }

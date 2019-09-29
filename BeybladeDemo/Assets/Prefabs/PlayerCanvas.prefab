@@ -606,6 +606,7 @@ MonoBehaviour:
   comboFadeSpeed: 3
   comboCanvas: {fileID: 225444070888476892}
   clashEvent: {fileID: 0}
+  ultimate: {fileID: 0}
 --- !u!114 &114993383166033190
 MonoBehaviour:
   m_ObjectHideFlags: 1
