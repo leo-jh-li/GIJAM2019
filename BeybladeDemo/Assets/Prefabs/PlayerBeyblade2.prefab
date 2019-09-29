@@ -594,6 +594,7 @@ MonoBehaviour:
   movementScripts:
   - {fileID: 114615926182011514}
   - {fileID: 114837609044143834}
+  - {fileID: 114374187199424376}
   m_gameSystem: {fileID: 0}
   m_maxStamina: 100
   m_defenseMultiplier: 2
@@ -624,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67803ab18b982a740a2cbf35ee81ac37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyName: Jump
+  keyName: Jump2
   dashMultiplier: 2.5
   dashTime: 1
 --- !u!114 &114387090829623564
@@ -672,6 +673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - {fileID: 8300000, guid: 14cb95ab4cd58ff4488dd572b6908f8f, type: 3}
+  - {fileID: 8300000, guid: d2dbf49d3c4c54442ae6dbb99e9e7485, type: 3}
   oneShot: {fileID: 82407427006062914}
 --- !u!114 &114558895577070654
 MonoBehaviour:

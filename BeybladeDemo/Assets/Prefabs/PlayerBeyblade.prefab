@@ -682,6 +682,7 @@ MonoBehaviour:
   movementScripts:
   - {fileID: 114400943411158632}
   - {fileID: 114910544940668580}
+  - {fileID: 114326626173356828}
   m_gameSystem: {fileID: 0}
   m_maxStamina: 100
   m_defenseMultiplier: 2

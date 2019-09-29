@@ -44,8 +44,6 @@ public class ClashEvent : MonoBehaviour
         m_attacker.enabled = true;
         m_defender.enabled = true;
 
-        //Start the Coroutine
-        StartCoroutine(Turn());
     }
 
     // Update is called once per frame
@@ -53,22 +51,24 @@ public class ClashEvent : MonoBehaviour
     {
         if (!isAttacking)
         {
+            Vector3 dir = (m_defender.transform.position - m_attacker.transform.position).normalized;
+            Vector3 cross = Vector3.Cross(dir, m_attacker.transform.TransformDirection(Vector3.up));
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.up);
+                this.triggerAnimation(m_defender.transform.position, Vector3.up, dir, cross);
             }
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.down);
+                this.triggerAnimation(m_defender.transform.position, Vector3.down, dir, cross);
             }
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.back);
+                this.triggerAnimation(m_defender.transform.position, Vector3.back, dir, cross);
             }
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                this.triggerAnimation(m_defender.transform.position, Vector3.forward);
+                this.triggerAnimation(m_defender.transform.position, Vector3.forward, dir, cross);
             }
         }
     }
@@ -81,7 +81,7 @@ public class ClashEvent : MonoBehaviour
         return point;
     }
 
-    void triggerAnimation(Vector3 end, Vector3 relativeDirection)
+    void triggerAnimation(Vector3 end, Vector3 relativeDirection, Vector3 dir, Vector3 cross)
     {
         isAttacking = true;
         m_attacker.GetComponent<Rigidbody>().detectCollisions = false;
@@ -91,8 +91,7 @@ public class ClashEvent : MonoBehaviour
         list.Add(m_attacker.transform.position);
 
 
-        Vector3 diff = end - m_attacker.transform.position;
-        this.getRelativeDirection(list, relativeDirection, end);
+        this.getRelativeDirection(list, relativeDirection, end, dir, cross);
 
         list.Add(end);
 		float duration = attackDuration;
@@ -121,10 +120,13 @@ public class ClashEvent : MonoBehaviour
             }
             else if (relativeDirection == Vector3.forward)
             {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    list[i] = getTopDownPos(list[i] + diff);
-                }
+                Vector3 diff =  (m_defender.transform.position - m_attacker.transform.position);
+                list = new List<Vector3>();
+                list.Add(getTopDownPos(end));
+                list.Add(getTopDownPos(end + dir * attackAmplitude * 0.5f));
+                list.Add(getTopDownPos(end + dir * attackAmplitude* 0.75f));
+                list.Add(getTopDownPos(end + dir * attackAmplitude* 1.0f));
+
             }
             if (relativeDirection != Vector3.zero)
             {
@@ -146,23 +148,21 @@ public class ClashEvent : MonoBehaviour
         });
     }
 
-    void getRelativeDirection(List<Vector3> list, Vector3 relativeDirection, Vector3 end)
+    void getRelativeDirection(List<Vector3> list, Vector3 relativeDirection, Vector3 end, Vector3 dir, Vector3 cross)
     {
-        Vector3 diff = end - m_attacker.transform.position;
         if (relativeDirection == Vector3.up || relativeDirection == Vector3.down)
         {
             // left/right
-            Vector3 cross = Vector3.Cross(diff.normalized, m_attacker.transform.TransformDirection(relativeDirection));
-            Vector3 v2 = m_attacker.transform.position + 0.33f * diff + cross * attackAmplitude;
-            Vector3 v3 = m_attacker.transform.position + 0.66f * diff + cross * attackAmplitude;
+            Vector3 v2 = m_attacker.transform.position + 0.33f * dir + cross * attackAmplitude;
+            Vector3 v3 = m_attacker.transform.position + 0.66f * dir + cross * attackAmplitude;
             list.Add(getTopDownPos(v2));
             list.Add(getTopDownPos(v3));
         }
         else if (relativeDirection == Vector3.back)
         {
             // down
-            Vector3 v2 = m_attacker.transform.position + 0.33f * diff;
-            Vector3 v3 = m_attacker.transform.position + 0.66f * diff;
+            Vector3 v2 = m_attacker.transform.position + 0.33f * dir;
+            Vector3 v3 = m_attacker.transform.position + 0.66f * dir;
             list.Add(getTopDownPos(v2));
             list.Add(getTopDownPos(v3));
         }
@@ -173,17 +173,16 @@ public class ClashEvent : MonoBehaviour
             Vector3 relativeRight = Vector3.down;
             float randFloat = Random.Range(0.0f, 1.0f);
             Vector3 relDir = randFloat >= 0.5 ? relativeRight : relativeLeft;
-            Vector3 cross = Vector3.Cross(diff.normalized, m_attacker.transform.TransformDirection(relDir));
-            Vector3 v2 = m_attacker.transform.position + 0.5f * diff + cross * attackAmplitude * 0.5f;
+            Vector3 v2 = m_attacker.transform.position + 0.5f * dir + cross * attackAmplitude * 0.5f;
             list.Add(getTopDownPos(v2));
-            Vector3 v3 = v2 + diff;
+            Vector3 v3 = v2 + dir;
             list.Add(getTopDownPos(v3));
             Vector3 v4 = m_defender.transform.position + cross * attackAmplitude* 0.5f;
             list.Add(getTopDownPos(v4));
 
-            Vector3 end2 = m_defender.transform.position + diff.normalized * attackAmplitude / 2;
+            Vector3 end2 = m_defender.transform.position + dir * attackAmplitude / 2;
             list.Add(getTopDownPos(v4));
-            list.Add(getTopDownPos(m_defender.transform.position + diff.normalized * attackAmplitude));
+            list.Add(getTopDownPos(m_defender.transform.position + dir * attackAmplitude));
             list.Add(getTopDownPos(end2));
         }
     }
@@ -201,7 +200,6 @@ public class ClashEvent : MonoBehaviour
    
         return orig;
     }
-	
     IEnumerator Turn() {
         while(true) {
             int attackerCommand = m_attacker.GetCommand();
