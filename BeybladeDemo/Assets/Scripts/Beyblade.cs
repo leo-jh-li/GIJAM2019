@@ -27,6 +27,8 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	// To Compute Damage
 	MovementControls m_mc;
 
+	private System.Action<float> uiHealthCallback;
+
 	float ComputeCollisionResult(BeybladePiece thisPiece, BeybladePiece otherPiece) {
 		Beyblade otherBey = otherPiece.m_parent;
 
@@ -95,6 +97,9 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 
 	public void TakeDamage(float dmg) {
 		m_stamina = (m_stamina - dmg < 0) ? 0 : m_stamina - dmg;
+		if (uiHealthCallback != null) {
+			uiHealthCallback.Invoke(m_stamina);
+		}
 	}
 
 	public void BeybladeCollision(BeybladePiece thisPiece, BeybladePiece otherPiece) {
@@ -117,9 +122,14 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 		m_collision = false;
 	}
 
+	public void setHealthUICallback(System.Action<float> callback) {
+		this.uiHealthCallback = callback;
+	}
+
 	void Start() {
 		m_mc = GetComponent<MovementControls>();
-		m_stamina = m_maxStamina;		
+		m_stamina = m_maxStamina;	
+		this.TakeDamage(0);
 		m_collision = false;
 	}
 

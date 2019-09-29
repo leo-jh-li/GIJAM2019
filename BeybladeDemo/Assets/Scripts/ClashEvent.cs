@@ -21,6 +21,7 @@ public class ClashEvent : MonoBehaviour
     public float maxDistanceThresh = 70;
     public float maxDistanceThreshOffset = 10f;
     public float topDownOffset = 10f;
+    private System.Action<int> comboCallback;
 
     public int GetMaxCombo() {
         return maxCombo;
@@ -28,10 +29,16 @@ public class ClashEvent : MonoBehaviour
 
     public void SetMaxCombo(int count) {
         maxCombo = count;
+        if (comboCallback != null) {
+            comboCallback.Invoke(maxCombo);
+        }
     }
 
     public void IncrementCombo() {
         current_combo++;
+        if (comboCallback != null) {
+            comboCallback.Invoke(maxCombo);
+        }
     }
 
     public int GetComboCount() {
@@ -53,6 +60,10 @@ public class ClashEvent : MonoBehaviour
         m_attacker = attacker;
         m_defender = defender;
         current_combo = 0;
+    }
+
+    public void setComboCallback(System.Action<int> callback) {
+        this.comboCallback = callback;
     }
 
     // Use this for initialization
