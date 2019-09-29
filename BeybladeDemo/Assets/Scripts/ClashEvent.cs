@@ -10,8 +10,9 @@ public class ClashEvent : MonoBehaviour
     public ClashEventModule m_attacker;
     public ClashEventModule m_defender;
 
-    public float attackDuration = 1f;
+    public float DefaultAttackDuration = 1f;
     public float attackAmplitude = 10f;
+    float attackDuration = 1f;
     bool isAttacking = false;
     int groundLayer;
     int maxCombo;
@@ -23,6 +24,10 @@ public class ClashEvent : MonoBehaviour
     public float topDownOffset = 10f;
     private System.Action<int> comboCallback;
 
+
+    public void SetAttackDuration(float attackDuration) {
+        this.attackDuration = attackDuration;
+    }
 
     public int GetMaxCombo() {
         return maxCombo;
@@ -91,9 +96,6 @@ public class ClashEvent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Hello");
-
-
         if (!isAttacking)
         {
             Vector3 dir = (m_defender.transform.position - m_attacker.transform.position).normalized;
@@ -120,13 +122,12 @@ public class ClashEvent : MonoBehaviour
             m_attacker.ResetCommand();
         }
 
-
-
         if(current_combo >= maxCombo) {
             m_gameSystem.Initiate3D(
                 m_attacker.gameObject.GetComponent<Beyblade>(), 
                 m_defender.gameObject.GetComponent<Beyblade>(),
                 GetLastKnownDirection());
+            attackDuration = DefaultAttackDuration;
             this.enabled = false;
         }
     }
@@ -182,7 +183,7 @@ public class ClashEvent : MonoBehaviour
             Debug.Log("Did not hit shield");
             IncrementCombo();
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
-            this.GetComponent<GameUITextMaker>().createText(m_defender.transform.position, m_attacker.m_comboDamage);
+            //this.GetComponent<GameUITextMaker>().createText(m_defender.transform.position, m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);
             this.tweenEnemyKnockback(relativeDirection, dir, cross);
         });

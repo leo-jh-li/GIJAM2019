@@ -13,13 +13,19 @@ public class GameSystem : MonoBehaviour {
 	//Delay Transition Modes
 	public float m_delayTransition;
 
+	//Players
+	public Beyblade p1, p2;
+
 	// Cameras
 	public CamerasManager m_cam;
 
+	//Directional Light
+	public Light m_dirLight;
+
 	// Initiate 2D Mode
-	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount) {
+	public void Initiate2D(Beyblade attacker, Beyblade defender, int comboCount, float clashSpeed = 0f) {
 		if (!m_gameMode) {
-			StartCoroutine(FreezeFrame2D(attacker, defender, comboCount));
+			StartCoroutine(FreezeFrame2D(attacker, defender, comboCount, clashSpeed));
 			m_gameMode = !m_gameMode;
 		}
 	}
@@ -42,7 +48,29 @@ public class GameSystem : MonoBehaviour {
 		
 	}
 
-	IEnumerator FreezeFrame2D(Beyblade attacker, Beyblade defender, int comboCount) {
+	public void FreezeGameState() {
+		//Disable Pieces
+        p1.DisableBeybladePieces();
+        p2.DisableBeybladePieces();
+
+        //Disable Controls
+        p1.DisablePlayerInfluence();
+        p2.DisablePlayerInfluence();
+
+        //Set Velocity to 0
+		p1.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
+		p2.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
+	}
+
+	public void NoLight() {
+		m_dirLight.intensity = 0f;
+	}
+
+	public void ResetLight() {
+		m_dirLight.intensity = 1f;
+	}
+
+	IEnumerator FreezeFrame2D(Beyblade attacker, Beyblade defender, int comboCount, float clashSpeed) {
 		//Freeze physics
 		attacker.GetComponentInChildren<MovementControls>().enabled = false;
 		attacker.GetComponentInChildren<TiltControls>().enabled = false;
@@ -93,6 +121,11 @@ public class GameSystem : MonoBehaviour {
 
 		//Enable Shield
 		defender.GetComponent<ShieldController>().enabled = true;
+
+		//Set the Clash Speed
+		if(clashSpeed > 0f) {
+			m_cevent.SetAttackDuration(clashSpeed);	
+		}
 
 		//Start the event
 		m_cevent.enabled = true;

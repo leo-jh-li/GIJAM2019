@@ -340,6 +340,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 23, y: 0, z: 0}
+--- !u!1 &631656940 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1355358247712746, guid: 120530589d2334e78ba4019c5cc3a069,
+    type: 2}
+  m_PrefabInternal: {fileID: 1675812690}
+--- !u!114 &631656941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114555841905219848, guid: 120530589d2334e78ba4019c5cc3a069,
+    type: 2}
+  m_PrefabInternal: {fileID: 1675812690}
+  m_Script: {fileID: 11500000, guid: 2f5453bdac94d43c6b15df4d7e3d195a, type: 3}
+--- !u!114 &631656950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 631656940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92fce8c41ca8a4bc393107fd47533f9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_currentUlt: 100
+  fire: z
+  m_animationTime: 2
+  m_ultimateCollider: {fileID: 0}
 --- !u!4 &665043052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4141939352172260, guid: b1a07a55618b74a4a9599b722fa3c729,
@@ -468,6 +494,65 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1295953983 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4331939152022212, guid: 120530589d2334e78ba4019c5cc3a069,
+    type: 2}
+  m_PrefabInternal: {fileID: 1675812690}
+--- !u!1 &1350171705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1350171706}
+  - component: {fileID: 1350171708}
+  - component: {fileID: 1350171707}
+  m_Layer: 0
+  m_Name: UltimateCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1350171706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1350171705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.41, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1295953983}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1350171707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1350171705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6d3d569ab774b8aa5c61b2206b3379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parent: {fileID: 631656941}
+--- !u!65 &1350171708
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1350171705}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 3, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1565842706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 76e975c81551cfd4ab2d7ff8e3de633c,
@@ -559,6 +644,12 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &1897369556 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114227629728281096, guid: b1a07a55618b74a4a9599b722fa3c729,
+    type: 2}
+  m_PrefabInternal: {fileID: 1927829361}
+  m_Script: {fileID: 11500000, guid: 2f5453bdac94d43c6b15df4d7e3d195a, type: 3}
 --- !u!1001 &1901666507
 Prefab:
   m_ObjectHideFlags: 0
@@ -728,6 +819,7 @@ MonoBehaviour:
   m_gameSystem: {fileID: 1929277908}
   m_attacker: {fileID: 0}
   m_defender: {fileID: 0}
+  DefaultAttackDuration: 0.5
   attackDuration: 0.5
   attackAmplitude: 25
   maxDistanceThresh: 50
@@ -761,6 +853,8 @@ MonoBehaviour:
   m_gameMode: 0
   m_cevent: {fileID: 1929277906}
   m_delayTransition: 2
+  p1: {fileID: 631656941}
+  p2: {fileID: 1897369556}
   m_cam: {fileID: 1145076364}
 --- !u!4 &2048178766 stripped
 Transform:

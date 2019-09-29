@@ -157,6 +157,11 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 		m_collision = true;
 	}
 
+	public void UltimateBeybladeCollision(UltimateCollider thisPiece, BeybladePiece otherPiece) {
+		thisPiece.gameObject.SetActive(false);
+		m_gameSystem.Initiate2D(this, otherPiece.m_parent, 40, 0.1f);
+	}
+
 	public void ResetCollision() {
 		m_collision = false;
 	}
