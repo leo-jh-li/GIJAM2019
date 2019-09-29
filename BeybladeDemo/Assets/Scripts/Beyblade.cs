@@ -23,6 +23,8 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	public float m_bounceDisableTime = 1f;
 
 	public Animator deathAnimator;
+	
+	public SoundManager sounds;
 
 	// Bitmap For Beyblade Collision
 	bool m_collision;
@@ -141,6 +143,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	}
 
 	public void BeybladeCollision(BeybladePiece thisPiece, BeybladePiece otherPiece) {
+		PlaySound(0,0.7f);
 		float result = ComputeCollisionResult(thisPiece, otherPiece);
 		if(ClashEventDecision(otherPiece.m_parent, result) && !m_collision) {
 			otherPiece.m_parent.TakeDamage(result);
@@ -163,6 +166,10 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	public void setHealthUICallback(System.Action<float> callback) {
 		this.uiHealthCallback = callback;
 	}
+	
+	public void PlaySound(int index, float vol){
+		this.sounds.PlaySound(index, vol);
+	}
 
 	void Start() {
 		m_mc = GetComponent<MovementControls>();
@@ -177,4 +184,5 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 			this.TakeDamage(1023);
 		}
 	}
+
 }

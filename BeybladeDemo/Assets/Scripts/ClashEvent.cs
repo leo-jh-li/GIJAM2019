@@ -172,13 +172,13 @@ public class ClashEvent : MonoBehaviour
                     break;
                 }
             }
-
         });
 
         tween.setOnComplete(() =>
         {
             Debug.Log("Did not hit shield");
             IncrementCombo();
+			m_attacker.GetComponent<Beyblade>().PlaySound(1, 0.7f);
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
             this.GetComponent<GameUITextMaker>().createText(m_defender.transform.position, m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);

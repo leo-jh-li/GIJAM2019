@@ -29,6 +29,7 @@ public class Dashing : MonoBehaviour {
     IEnumerator Dash()
     {
         // Start of Dash
+		b.PlaySound(2,0.7f);
         rb.velocity = rb.velocity * dashMultiplier;
         b.DisablePlayerInfluence();
         yield return new WaitForSeconds(dashTime);
