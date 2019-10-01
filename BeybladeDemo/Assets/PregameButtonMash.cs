@@ -41,6 +41,9 @@ public class PregameButtonMash : MonoBehaviour {
 			}
 			if (Time.time - mashStartTime >= mashDuration) {
 				mashingActive = false;
+				foreach (MashMeter meter in mashMeters) {
+					meter.gameObject.SetActive(false);
+				}
 			}
 		}
 	}

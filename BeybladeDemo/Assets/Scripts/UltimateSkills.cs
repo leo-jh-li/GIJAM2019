@@ -26,7 +26,11 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 	}
 
 	public void ChargeUltimateBar(float value) {
-		m_currentUlt = m_currentUlt + value >= 100 ? 100 : m_currentUlt + value;
+		SetUltimateBar(m_currentUlt + value);
+	}
+
+	private void SetUltimateBar(float value) {
+		m_currentUlt = Mathf.Clamp(value, 0, 100);
 		if (this.callback != null) {
 			this.callback.Invoke(m_currentUlt);
 		}
@@ -39,14 +43,14 @@ public class UltimateSkills : MonoBehaviour, PlayerControls {
 	void Start() {
 		playerInfluence = true;
 		player = GetComponent<Beyblade>();
-		this.ChargeUltimateBar(0);
+		SetUltimateBar(m_currentUlt);
 		//m_ultimateCollider = GetComponentInChildren<UltimateCollider>();
 	}
 
 	void Update() {
 		if(Input.GetButtonDown(fire) && playerInfluence && m_currentUlt == 100) {
 			UseUltimate();
-			m_currentUlt = 0;
+			SetUltimateBar(0);
 		}
 	}
 
