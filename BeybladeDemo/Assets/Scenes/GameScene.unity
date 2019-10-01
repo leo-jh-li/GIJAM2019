@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465984, g: 0.49643546, b: 0.5748276, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465986, g: 0.49643546, b: 0.5748279, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -249,12 +249,12 @@ Prefab:
     - target: {fileID: 114932932759112110, guid: 448d2287b13ba2b468ba60e783a05bb7,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114932932759112110, guid: 448d2287b13ba2b468ba60e783a05bb7,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114371648488634950, guid: 448d2287b13ba2b468ba60e783a05bb7,
         type: 2}
@@ -291,6 +291,56 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 224119952970266472, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224119952970266472, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224119952970266472, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -447
+      objectReference: {fileID: 0}
+    - target: {fileID: 224119952970266472, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224160174183821116, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224160174183821116, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224160174183821116, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224160174183821116, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: -447
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371648488634950, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: topMashCount
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114371648488634950, guid: 448d2287b13ba2b468ba60e783a05bb7,
+        type: 2}
+      propertyPath: staminaBonusPerMash
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 448d2287b13ba2b468ba60e783a05bb7, type: 2}
   m_IsPrefabAsset: 0
@@ -310,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b65fa4ba835c634e8b78a52380e4a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mashInput: P1_Square
+  mashInput: P1_Jump
   mashCount: 0
 --- !u!1 &442724305
 GameObject:
@@ -322,7 +372,7 @@ GameObject:
   - component: {fileID: 442724307}
   - component: {fileID: 442724306}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -341,7 +391,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -452,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b65fa4ba835c634e8b78a52380e4a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mashInput: P2_Square
+  mashInput: P2_Jump
   mashCount: 0
 --- !u!1001 &486153517
 Prefab:
@@ -507,6 +557,11 @@ Prefab:
       propertyPath: m_freeFocusTarget
       value: 
       objectReference: {fileID: 2048178766}
+    - target: {fileID: 114916976692918638, guid: efb40b745f89a8041922ec7c724c4f4d,
+        type: 2}
+      propertyPath: m_moveSpeed
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efb40b745f89a8041922ec7c724c4f4d, type: 2}
   m_IsPrefabAsset: 0
@@ -1046,7 +1101,7 @@ Prefab:
     - target: {fileID: 114555841905219848, guid: 120530589d2334e78ba4019c5cc3a069,
         type: 2}
       propertyPath: m_stamina
-      value: 50
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114925004212652058, guid: 120530589d2334e78ba4019c5cc3a069,
         type: 2}
@@ -1062,6 +1117,21 @@ Prefab:
         type: 2}
       propertyPath: m_currentUlt
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114400943411158632, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: cameraRig
+      value: 
+      objectReference: {fileID: 1001494038}
+    - target: {fileID: 114910544940668580, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: playerOne
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114555841905219848, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: m_maxStamina
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
@@ -1435,6 +1505,11 @@ Prefab:
     - target: {fileID: 1932100310811578, guid: efb40b745f89a8041922ec7c724c4f4d, type: 2}
       propertyPath: m_Name
       value: P1 Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 114916976692918638, guid: efb40b745f89a8041922ec7c724c4f4d,
+        type: 2}
+      propertyPath: m_moveSpeed
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 81030163486202628, guid: efb40b745f89a8041922ec7c724c4f4d, type: 2}
@@ -1828,7 +1903,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4788471726660862, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -13.44
+      value: -13.59
       objectReference: {fileID: 0}
     - target: {fileID: 4788471726660862, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1872,7 +1947,7 @@ Prefab:
     - target: {fileID: 114555841905219848, guid: 120530589d2334e78ba4019c5cc3a069,
         type: 2}
       propertyPath: m_stamina
-      value: 50
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114925004212652058, guid: 120530589d2334e78ba4019c5cc3a069,
         type: 2}
@@ -1887,7 +1962,22 @@ Prefab:
     - target: {fileID: 114477098419685756, guid: 120530589d2334e78ba4019c5cc3a069,
         type: 2}
       propertyPath: m_currentUlt
-      value: 100
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114400943411158632, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: cameraRig
+      value: 
+      objectReference: {fileID: 2091020973}
+    - target: {fileID: 114910544940668580, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: playerOne
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114555841905219848, guid: 120530589d2334e78ba4019c5cc3a069,
+        type: 2}
+      propertyPath: m_maxStamina
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 120530589d2334e78ba4019c5cc3a069, type: 2}

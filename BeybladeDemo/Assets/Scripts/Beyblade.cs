@@ -111,7 +111,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	public void TakeDamage(float dmg) {
 		if (this.enabled == false) return;
 
-		m_stamina = (m_stamina - dmg < 0) ? 0 : m_stamina - dmg;
+		m_stamina = Mathf.Clamp(m_stamina - dmg, 0, m_maxStamina);
 		if (uiHealthCallback != null) {
 			uiHealthCallback.Invoke(m_stamina);
 		}
@@ -119,7 +119,9 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 			this.Die();
 		}
 
-		m_us.ChargeUltimateBar(dmg/2);
+		if (dmg > 0) {
+			m_us.ChargeUltimateBar(dmg/2);
+		}
 	}
 
 	public void Die() {

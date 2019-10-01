@@ -8,7 +8,9 @@ public class PregameButtonMash : MonoBehaviour {
 	[SerializeField] private MashControls[] mashControls;
 	[SerializeField] private MashMeter[] mashMeters;
 	[SerializeField] private float mashDuration;
-	[SerializeField] private float topMashCount = 30;
+	[SerializeField] private float topMashCount = 25;
+	[SerializeField] private float staminaBonusPerMash = 10;
+	[SerializeField] private float rotationBonusPerMash = 1;
 	private bool mashingActive = false;
 	private float mashStartTime;
 
@@ -34,7 +36,7 @@ public class PregameButtonMash : MonoBehaviour {
 				if (Input.GetButtonDown(mashControls[i].mashInput)) {
 					mashControls[i].mashCount++;
 					mashMeters[i].UpdateMeter(mashControls[i].mashCount / topMashCount);
-					IncreaseSpeed(players[i]);
+					ApplyMashBonus(players[i]);
 				}
 			}
 			if (Time.time - mashStartTime >= mashDuration) {
@@ -43,8 +45,8 @@ public class PregameButtonMash : MonoBehaviour {
 		}
 	}
 
-	private void IncreaseSpeed(GameObject player) {
-		player.GetComponent<Beyblade>().m_stamina += 20;
-		player.GetComponentInChildren<Rotation>().m_rotationSpeed += 1;
+	private void ApplyMashBonus(GameObject player) {
+		player.GetComponent<Beyblade>().TakeDamage(-staminaBonusPerMash);
+		player.GetComponentInChildren<Rotation>().m_rotationSpeed += rotationBonusPerMash;
 	}
 }

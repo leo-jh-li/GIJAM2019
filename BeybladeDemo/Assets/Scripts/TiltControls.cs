@@ -55,10 +55,15 @@ public class TiltControls : MonoBehaviour, PlayerControls {
 
 		RaycastHit hit;
 		Vector3 downDirection = center.transform.TransformDirection(Vector3.down);
-		Debug.DrawLine(center.transform.position, downDirection);
+
+		// Debug.DrawLine(center.transform.position, downDirection);
 		if (Physics.Raycast(center.transform.position, downDirection, out hit, 999999f, layerMask)) {
+			// float forwardRotationY = SignedAngleBetween(transform.parent.forward, Vector3.forward, Vector3.up);
+			float forwardRotationY = Vector3.SignedAngle(transform.parent.forward, Vector3.forward, Vector3.up);
+			Vector3 rotatedTiltAngles = (Quaternion.Euler(x_tilt, 0, z_tilt) * Quaternion.Euler(0, forwardRotationY, 0)).eulerAngles;
 			Quaternion baseRotation = Quaternion.LookRotation(hit.normal) * Quaternion.Euler(90, 0, 0);
-			Quaternion targetRotation = Quaternion.Euler(x_tilt, 0, z_tilt) * baseRotation;
+			Quaternion targetRotation = Quaternion.Euler(rotatedTiltAngles.x, 0, rotatedTiltAngles.z) * baseRotation;
+
 			transform.rotation = Quaternion.Slerp(
 			transform.rotation,
 			targetRotation,
