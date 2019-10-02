@@ -176,7 +176,7 @@ public class ClashEvent : MonoBehaviour
         tween.setOnComplete(() =>
         {
             IncrementCombo();
-			m_attacker.GetComponent<Beyblade>().PlaySound(1, 0.7f);
+			m_attacker.GetComponent<Beyblade>().PlaySound(1, 0.2f);
             m_defender.GetComponent<Beyblade>().TakeDamage(m_attacker.m_comboDamage);
             this.nextTween(end, relativeDirection, list, dir, duration);
             this.tweenEnemyKnockback(relativeDirection, dir, cross);

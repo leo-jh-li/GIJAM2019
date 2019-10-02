@@ -148,7 +148,7 @@ public class Beyblade : MonoBehaviour, PlayerControls {
 	}
 
 	public void BeybladeCollision(BeybladePiece thisPiece, BeybladePiece otherPiece) {
-		PlaySound(0,0.7f);
+		PlaySound(0,0.2f);
 		float result = ComputeCollisionResult(thisPiece, otherPiece);
 		print(result + gameObject.name);
 		if(ClashEventDecision(otherPiece.m_parent, result) && !m_collision) {
